@@ -1,0 +1,8 @@
+{
+  "mongoRunner": {
+    "connection": {
+      "name": "Plastic Collector",
+      "url": "mongodb+srv://admin:jaFP4r7JqcWhrG4Z@cluster0.r9ulp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    }
+  }
+}
