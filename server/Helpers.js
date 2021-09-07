@@ -1,5 +1,7 @@
 const ErrorHandler = (res, error) => res.json({ success: false, result: error.message });
 const SuccessHandler = (res, result) => res.json({ success: true, result });
+const MissingField = (res, field) =>
+  res.json({ success: true, result: `${field} is missing but required, add it and try again` });
 
 const hashPassword = (stringToHash) => Bcrypt.hashSync(stringToHash, 10);
 
@@ -53,5 +55,6 @@ module.exports = {
   validateToken,
   hashPassword,
   decodePassword,
-  paginateHelper
+  paginateHelper,
+  MissingField
 };
