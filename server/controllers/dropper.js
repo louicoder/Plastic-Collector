@@ -1,4 +1,4 @@
-const { ErrorHandler, SuccessHandler } = require('../Helpers');
+const { ErrorHandler, SuccessHandler, paginateHelper, MissingField } = require('../Helpers');
 const { dropper: DR, collection: COLL } = require('../models');
 
 const register = async (req, res) => {
@@ -16,8 +16,25 @@ const register = async (req, res) => {
 };
 
 const getAllDroppers = async (req, res) => {
+  const { page = 1, limit = 2 } = req.query;
   try {
-    await DR.find().then((result) => SuccessHandler(res, result));
+    const total = await DR.find().countDocuments();
+    await DR.find()
+      .limit(parseInt(limit) * 1)
+      .skip((parseInt(page) - 1) * parseInt(limit))
+      .sort({ dateCreated: 'desc' })
+      .then((result) => paginateHelper(page, limit, total, result, res));
+  } catch (error) {
+    return ErrorHandler(res, error);
+  }
+};
+
+const getDropper = async (req, res) => {
+  if (!req.params.uid) return MissingField(res, 'User id');
+  const { uid: _id } = req.params;
+
+  try {
+    await DR.findOne({ _id }).then((result) => SuccessHandler(res, result));
   } catch (error) {
     return ErrorHandler(res, error);
   }
@@ -26,9 +43,34 @@ const getAllDroppers = async (req, res) => {
 const getDroppersByDistrict = async (req, res) => {
   if (!req.params.district) return MissingField(res, 'Uid');
   const { district } = req.params;
+  const { page = 1, limit = 2 } = req.query;
 
+  const query = { district: district.trim().toLowerCase() };
   try {
-    await DR.find({ district: district.trim().toLowerCase() }).then((result) => SuccessHandler(res, result));
+    const total = await DR.find(query).countDocuments();
+    await DR.find(query)
+      .limit(parseInt(limit) * 1)
+      .skip((parseInt(page) - 1) * parseInt(limit))
+      .sort({ dateCreated: 'desc' })
+      .then((result) => paginateHelper(page, limit, total, result, res));
+  } catch (error) {
+    return ErrorHandler(res, error);
+  }
+};
+
+const getDroppersByAttendant = async (req, res) => {
+  if (!req.params.attendantId) return MissingField(res, 'Attendant Id');
+  const { attendantId } = req.params;
+  const { page = 1, limit = 2 } = req.query;
+
+  const query = { attendantId: attendantId.trim().toLowerCase() };
+  try {
+    const total = await DR.find(query).countDocuments();
+    await DR.find(query)
+      .limit(parseInt(limit) * 1)
+      .skip((parseInt(page) - 1) * parseInt(limit))
+      .sort({ dateCreated: 'desc' })
+      .then((result) => paginateHelper(page, limit, total, result, res));
   } catch (error) {
     return ErrorHandler(res, error);
   }
@@ -44,4 +86,11 @@ const getDropperCollections = async (req, res) => {
   }
 };
 
-module.exports = { register, getDropperCollections, getDroppersByDistrict, getAllDroppers };
+module.exports = {
+  register,
+  getDropperCollections,
+  getDroppersByDistrict,
+  getAllDroppers,
+  getDroppersByAttendant,
+  getDropper
+};
