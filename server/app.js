@@ -8,8 +8,8 @@ require('./connection')();
 
 // Routes setup
 const { collection, account, dropper } = require('./routes');
-app.use('/api/collection', collection);
-app.use('/api/account', account);
-app.use('/api/dropper', dropper);
+app.use('/collection', collection);
+app.use('/account', account);
+app.use('/dropper', dropper);
 
 module.exports = app;

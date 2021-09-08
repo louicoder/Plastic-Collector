@@ -1,3 +1,6 @@
+const Bcrypt = require('bcrypt');
+const JWT = require('jsonwebtoken');
+
 const ErrorHandler = (res, error) => res.json({ success: false, result: error.message });
 const SuccessHandler = (res, result) => res.json({ success: true, result });
 const MissingField = (res, field) =>
