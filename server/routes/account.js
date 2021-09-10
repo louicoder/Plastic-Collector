@@ -6,6 +6,6 @@ Router.post('/update/:uid', account.updateAccount);
 Router.post('/login', account.login);
 Router.get('/district/:district', account.getCollectorsByDistrict);
 Router.get('/all', account.getAllCollectors);
-Router.get('/:uid', account.getAccount);
+Router.get('/:accountType/:uid', account.getAccount);
 
 module.exports = Router;

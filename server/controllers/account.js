@@ -7,7 +7,7 @@ const {
   decodePassword,
   paginateHelper
 } = require('../Helpers');
-const { account: AM } = require('../models');
+const { account: AM, collection: COLL, dropper: DR } = require('../models');
 
 const register = async (req, res) => {
   if (!req.body.phoneNumber) return MissingField(res, 'Phone number');
@@ -70,13 +70,14 @@ const login = async (req, res) => {
 };
 
 const getAccount = async (req, res) => {
-  if (!req.params.uid) return MissingField(res, 'Uid');
+  if (!req.params.accountType) return MissingField(res, 'Account Type');
+  if (!req.params.uid) return MissingField(res, 'Account Type');
+  // if()
 
-  const { uid: _id } = req.params;
+  const { uid: _id, accountType } = req.params;
   try {
-    const result = await AM.findOne({ _id });
+    const result = accountType === 'dropper' ? await DR.findOne({ _id }) : await AM.findOne({ _id });
     if (!result) return res.json({ succes: false, result: 'No user exists with that id, try again' });
-
     return SuccessHandler(res, result);
   } catch (error) {
     return ErrorHandler(res, error);

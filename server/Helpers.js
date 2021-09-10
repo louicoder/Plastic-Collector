@@ -16,7 +16,7 @@ const paginateHelper = (page, limit, totalDocuments, result, res) => {
       result,
       totalDocuments,
       success: true,
-      currentPage: parseInt(page),
+      nextPage: parseInt(page) + 1,
       totalPages: Math.ceil(totalDocuments / parseInt(limit)),
       last: parseInt(page) === Math.ceil(totalDocuments / parseInt(limit))
     });
