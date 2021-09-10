@@ -17,8 +17,6 @@ const AddCollection = () => {
 
   const [ state, setState ] = React.useState({});
 
-  // console.log('USER', user);
-
   // This function registers person who is new and has not been registered
   // before adding their package
   const registerDropper = () => {

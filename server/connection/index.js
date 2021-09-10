@@ -8,8 +8,8 @@ const url = 'mongodb://127.0.0.1:27017/plastics';
 // DEV Database string.
 const connectWithRetry = () =>
   mongoose.connect(
-    // process.env.DB,
-    url,
+    process.env.DB,
+    // url,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true
