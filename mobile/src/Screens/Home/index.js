@@ -10,7 +10,7 @@ const Home = () => {
   // console.log('Satte', state);
 
   React.useEffect(() => {
-    getCollections();
+    // getCollections();
   }, []);
 
   const getCollections = () => {

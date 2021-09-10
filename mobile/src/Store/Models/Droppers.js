@@ -13,9 +13,10 @@ export default {
   effects: (dispatch) => ({
     // This function registers a new dropper not existing in the database:
     async registerDropper ({ payload, callback }, state) {
+      // console.log('Payload====', payload);
       try {
-        await AXIOS('dropper').get(`/register`, payload).then(({ data }) => {
-          if (data.success) dispatch.Collections.setActiveDropper(data.result);
+        await AXIOS('dropper').post(`/register`, payload).then(({ data }) => {
+          if (data.success) dispatch.Droppers.setActiveDropper(data.result);
           return callback(data);
         });
       } catch (error) {

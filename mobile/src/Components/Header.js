@@ -9,10 +9,10 @@ const Header = ({ title, onBackPress, leftIcons, showback = true, extStyles }) =
   return (
     <View
       style={{
-        height: RFValue(60),
+        height: RFValue(40),
         flexDirection: 'row',
         alignItems: 'center',
-        // marginTop: useSafeAreaInsets().top,
+        marginTop: useSafeAreaInsets().top,
         // borderWidth: 1,
         justifyContent: 'space-between',
         paddingHorizontal: RFValue(15),
@@ -27,7 +27,7 @@ const Header = ({ title, onBackPress, leftIcons, showback = true, extStyles }) =
             extStyles={{ marginRight: RFValue(10) }}
           />
         )}
-        {title && <Text style={{ fontSize: RFValue(20), fontWeight: 'bold' }}>{title}</Text>}
+        {title && <Text style={{ fontSize: RFValue(22), fontWeight: 'bold' }}>{title}</Text>}
       </View>
 
       <View style={{ flexDirection: 'row', height: RFValue(50), alignItems: 'center' }}>

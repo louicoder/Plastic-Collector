@@ -7,7 +7,7 @@ const Button = ({ onPress, extStyles, txtStyles, title, color = '#fff', loading 
     <Pressable
       style={{
         width: '100%',
-        height: RFValue(40),
+        height: RFValue(50),
         backgroundColor: loading ? '#01020360' : '#010203',
         justifyContent: 'center',
         alignItems: 'center',

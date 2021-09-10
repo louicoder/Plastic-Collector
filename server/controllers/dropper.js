@@ -1,14 +1,15 @@
-const { ErrorHandler, SuccessHandler, paginateHelper, MissingField } = require('../Helpers');
+const { ErrorHandler, SuccessHandler, paginateHelper, MissingField, getDateString } = require('../Helpers');
 const { dropper: DR, collection: COLL } = require('../models');
 
 const register = async (req, res) => {
   if (!req.body.name) return MissingField(res, 'Name');
   if (!req.body.phoneNumber) return MissingField(res, 'Phone number');
   if (!req.body.district) return MissingField(res, 'District');
+  if (!req.body.attendantId) return MissingField(res, 'Attendant Id');
   if (!req.body.gender) return MissingField(res, 'Gender');
 
   try {
-    const dropper = new DR({ ...req.body, dateCreated: new Date().toISOString() });
+    const dropper = new DR({ ...req.body, dateCreated: getDateString() });
     await dropper.save().then((result) => SuccessHandler(res, result));
   } catch (error) {
     return ErrorHandler(res, error);

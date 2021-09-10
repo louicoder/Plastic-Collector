@@ -13,8 +13,24 @@ const FilterStack = createStackNavigator();
 const AccountStack = createStackNavigator();
 const AboutStack = createStackNavigator();
 const AddStack = createStackNavigator();
+const LoginStack = createStackNavigator();
+const RegisterStack = createStackNavigator();
 const AllStacks = createStackNavigator();
 const BottomTabs = createBottomTabNavigator();
+
+// Registration screens
+const RegisterScreens = () => (
+  <RegisterStack.Navigator screenOptions={{ headerMode: 'screen', header: () => null }}>
+    <RegisterStack.Screen name="RegisterScreen" component={Register} />
+  </RegisterStack.Navigator>
+);
+
+// Login screens
+const LoginScreens = () => (
+  <LoginStack.Navigator screenOptions={{ headerMode: 'screen', header: () => null }}>
+    <LoginStack.Screen name="LoginScreen" component={Login} />
+  </LoginStack.Navigator>
+);
 
 // Home screens
 const HomeScreens = () => (
@@ -49,7 +65,7 @@ const AddScreens = () => (
             {...props}
             showback={false}
             // leftIcons={[ { name: 'plus', onPress: () => null }, { name: 'deleteuser', onPress: () => null } ]}
-            title="Add Package"
+            title="Add Collection"
           />
         ),
         cardStyle: { backgroundColor: '#fff' }
@@ -125,7 +141,12 @@ const AboutScreens = () => (
 const MainScreens = () => (
   <BottomTabs.Navigator
     screenOptions={{
-      tabBarStyle: { backgroundColor: '#000', height: RFValue(60), paddingBottom: RFValue(0) },
+      tabBarStyle: {
+        backgroundColor: '#000',
+        height: RFValue(50 + useSafeAreaInsets().bottom),
+        // paddingBottom: RFValue(0),
+        paddingBottom: useSafeAreaInsets().bottom - RFValue(10)
+      },
       tabBarActiveTintColor: '#fff',
       headerShown: false,
       tabBarShowLabel: false
@@ -185,10 +206,10 @@ const MainScreens = () => (
 
 // ::::: ALL TAB SCREENS :::::
 const AllScreens = () => (
-  <AllStacks.Navigator initialRouteName="Main" screenOptions={{ header: () => null, cardStyle: { borderWidth: 0 } }}>
+  <AllStacks.Navigator initialRouteName="Login" screenOptions={{ header: () => null, cardStyle: {} }}>
     <AllStacks.Screen name="Main" component={MainScreens} />
-    <AllStacks.Screen name="Login" component={Login} />
-    <AllStacks.Screen name="Register" component={Register} />
+    <AllStacks.Screen name="Login" component={LoginScreens} />
+    <AllStacks.Screen name="Register" component={RegisterScreens} />
     {/* <AllStacks.Screen name="About" component={AboutScreens} /> */}
   </AllStacks.Navigator>
 );

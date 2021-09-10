@@ -10,8 +10,8 @@ const Account = () => {
   const [ state, setState ] = React.useState({ attendantId: '6138887ea3ffff58389e38e9', nextPage: 1, limit: 10 });
 
   React.useEffect(() => {
-    getAccount();
-    getAttendantCollections();
+    // getAccount();
+    // getAttendantCollections();
   }, []);
 
   const getAccount = () => {
@@ -21,8 +21,6 @@ const Account = () => {
       callback: (res) => {
         if (!res.success) return alert(res.result);
         const { nextPage, totalDocuments: total, ...rest } = res;
-        // console.log('Account here', res);
-        // setState({ ...state, nextPage, total });
       }
     });
   };
@@ -35,9 +33,6 @@ const Account = () => {
       limit,
       callback: (res) => {
         if (!res.success) return alert(res.result);
-        // const { nextPage, totalDocuments: total, ...rest } = res;
-        // console.log('Account here', res);
-        // setState({ ...state, nextPage, total });
       }
     });
   };

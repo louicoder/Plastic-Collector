@@ -1,5 +1,5 @@
 const { COMPANIES, MEASUREMENTS } = require('../Constants');
-const { ErrorHandler, paginateHelper, MissingField, SuccessHandler } = require('../Helpers');
+const { ErrorHandler, paginateHelper, MissingField, SuccessHandler, getDateString } = require('../Helpers');
 const { account: AM, collection: COLL } = require('../models');
 
 const createCollection = async (req, res) => {
@@ -22,7 +22,7 @@ const createCollection = async (req, res) => {
   }
   // const total
   try {
-    const _coll = new COLL({ ...req.body, totalCollection, dateCreated: new Date().toISOString() });
+    const _coll = new COLL({ ...req.body, totalCollection, dateCreated: getDateString() });
     await _coll.save().then((result) => SuccessHandler(res, result));
   } catch (error) {
     return ErrorHandler(res, error);

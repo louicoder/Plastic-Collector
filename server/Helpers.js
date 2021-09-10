@@ -51,6 +51,9 @@ const validateToken = (req, res, next) => {
   }
 };
 
+const getDateString = (d = new Date()) =>
+  new Date(Date.now() - d.getTimezoneOffset() * 60000).toISOString().slice(0, -1);
+
 module.exports = {
   ErrorHandler,
   SuccessHandler,
@@ -59,5 +62,6 @@ module.exports = {
   hashPassword,
   decodePassword,
   paginateHelper,
-  MissingField
+  MissingField,
+  getDateString
 };

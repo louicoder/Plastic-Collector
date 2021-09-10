@@ -27,7 +27,7 @@ export default {
       try {
         await AXIOS('collections').post(`/create`, payload).then(({ data }) => {
           if (data.success)
-            dispatch.Collections.setAttendantCollections([ ...state.Collections.collections, data.result ]);
+            dispatch.Collections.setAttendantCollections([ ...state.Collections.attendantCollections, data.result ]);
           return callback(data);
         });
       } catch (error) {

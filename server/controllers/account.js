@@ -5,7 +5,8 @@ const {
   createToken,
   SuccessHandler,
   decodePassword,
-  paginateHelper
+  paginateHelper,
+  getDateString
 } = require('../Helpers');
 const { account: AM, collection: COLL, dropper: DR } = require('../models');
 
@@ -20,7 +21,7 @@ const register = async (req, res) => {
   try {
     const { password: pass, ...rest } = req.body;
     const password = hashPassword(pass);
-    const Acc = new AM({ ...rest, password, dateCreated: new Date().toISOString() });
+    const Acc = new AM({ ...rest, password, dateCreated: getDateString() });
     await Acc.save().then((user) => {
       const token = createToken(user);
       return SuccessHandler(res, { user, token });
