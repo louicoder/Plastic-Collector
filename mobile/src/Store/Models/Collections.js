@@ -2,7 +2,13 @@ import { AXIOS } from '../../Utils/Functions';
 
 export default {
   // Collection State :::
-  state: { collections: [], districtCollections: [], attendantCollections: [], dropperCollections: [] },
+  state: {
+    collections: [],
+    districtCollections: [],
+    attendantCollections: [],
+    dropperCollections: [],
+    payload: { typesBreakdown: [], total: '' }
+  },
 
   //  Reducers :::
   reducers: {
@@ -17,6 +23,9 @@ export default {
     },
     setDropperCollections (state, dropperCollections) {
       return { ...state, dropperCollections };
+    },
+    setPayload (state, payload) {
+      return { ...state, payload };
     }
   },
 
@@ -28,6 +37,7 @@ export default {
         await AXIOS('collections').post(`/create`, payload).then(({ data }) => {
           if (data.success)
             dispatch.Collections.setAttendantCollections([ ...state.Collections.attendantCollections, data.result ]);
+          dispatch.Collections.setSubmission({});
           return callback(data);
         });
       } catch (error) {

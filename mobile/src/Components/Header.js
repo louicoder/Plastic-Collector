@@ -5,29 +5,36 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KEY } from '../Utils/Functions';
 import DesignIcon from './DesignIcon';
 
-const Header = ({ title, onBackPress, leftIcons, showback = true, extStyles }) => {
+const Header = ({ title, onBackPress, leftIcons, showback = true, extStyles, navigation, titleStyles, ...rest }) => {
+  // console.log('HEADER REST', rest.options);
   return (
     <View
       style={{
-        height: RFValue(40),
+        height: RFValue(60),
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: useSafeAreaInsets().top,
-        // borderWidth: 1,
+        borderBottomWidth: 1,
+        borderColor: '#eeeeee90',
         justifyContent: 'space-between',
-        paddingHorizontal: RFValue(15),
+        paddingHorizontal: RFValue(10),
         ...extStyles
       }}
     >
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         {showback && (
           <DesignIcon
-            name={Platform.select({ ios: 'arrow-left', android: 'chevron-left' })}
-            onPress={onBackPress}
+            name={Platform.select({ ios: 'chevron-left', android: 'arrowleft' })}
+            onPress={() => navigation.goBack()}
             extStyles={{ marginRight: RFValue(10) }}
+            pkg={Platform.OS === 'ios' ? 'mc' : 'ad'}
+            size={25}
           />
         )}
-        {title && <Text style={{ fontSize: RFValue(22), fontWeight: 'bold' }}>{title}</Text>}
+      </View>
+
+      <View style={{ flexGrow: 1, borderColor: 'red', ...titleStyles }}>
+        {title && <Text style={{ fontSize: RFValue(22), fontFamily: 'opensans-bold' }}>{title}</Text>}
       </View>
 
       <View style={{ flexDirection: 'row', height: RFValue(50), alignItems: 'center' }}>

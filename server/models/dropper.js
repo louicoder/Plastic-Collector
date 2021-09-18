@@ -5,8 +5,8 @@ const dropper = new mongoose.Schema({
   phoneNumber: { type: String, default: '' },
   gender: { type: String, enum: [ 'male', 'female' ], required: true },
   district: { type: String, lowercase: true, trim: true, required: true },
-  dateCreated: String,
-  attendantId: { type: String, required: true }
+  attendantId: { type: String, required: true },
+  dateCreated: String
 });
 
 module.exports = mongoose.model('dropper', dropper);

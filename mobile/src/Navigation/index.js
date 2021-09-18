@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home, Filter, About, Account, Login, Register, AddColleciton } from '../Screens';
+import { Home, Filter, About, Account, Login, Register, AddColleciton, Splash } from '../Screens';
 import { DesignIcon, Header } from '../Components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -21,7 +21,11 @@ const BottomTabs = createBottomTabNavigator();
 // Registration screens
 const RegisterScreens = () => (
   <RegisterStack.Navigator screenOptions={{ headerMode: 'screen', header: () => null }}>
-    <RegisterStack.Screen name="RegisterScreen" component={Register} />
+    <RegisterStack.Screen
+      name="RegisterScreen"
+      component={Register}
+      options={{ header: (props) => <Header title="Registration" {...props} /> }}
+    />
   </RegisterStack.Navigator>
 );
 
@@ -39,14 +43,7 @@ const HomeScreens = () => (
       name="HomeScreen"
       component={Home}
       options={{
-        header: (props) => (
-          <Header
-            {...props}
-            showback={false}
-            // leftIcons={[ { name: 'plus', onPress: () => null }, { name: 'deleteuser', onPress: () => null } ]}
-            title="Home screen"
-          />
-        ),
+        header: (props) => <Header {...props} showback={false} title="Home screen" />,
         cardStyle: { backgroundColor: '#fff' }
       }}
     />
@@ -64,7 +61,7 @@ const AddScreens = () => (
           <Header
             {...props}
             showback={false}
-            // leftIcons={[ { name: 'plus', onPress: () => null }, { name: 'deleteuser', onPress: () => null } ]}
+            leftIcons={[ { name: 'adduser', onPress: () => props.route.params.onPressAction() } ]}
             title="Add Collection"
           />
         ),
@@ -106,6 +103,7 @@ const AccountScreens = () => (
           <Header
             {...props}
             showback={false}
+            titleStyles={{ alignItems: 'center' }}
             // leftIcons={[ { name: 'plus', onPress: () => null }, { name: 'deleteuser', onPress: () => null } ]}
             title="Your Account"
           />
@@ -126,6 +124,7 @@ const AboutScreens = () => (
         header: (props) => (
           <Header
             {...props}
+            titleStyles={{ alignItems: 'center' }}
             showback={false}
             // leftIcons={[ { name: 'plus', onPress: () => null }, { name: 'deleteuser', onPress: () => null } ]}
             title="About Platic Collector"
@@ -143,8 +142,7 @@ const MainScreens = () => (
     screenOptions={{
       tabBarStyle: {
         backgroundColor: '#000',
-        height: RFValue(50 + useSafeAreaInsets().bottom),
-        // paddingBottom: RFValue(0),
+        height: RFValue(60 + useSafeAreaInsets().bottom),
         paddingBottom: useSafeAreaInsets().bottom - RFValue(10)
       },
       tabBarActiveTintColor: '#fff',
@@ -206,10 +204,11 @@ const MainScreens = () => (
 
 // ::::: ALL TAB SCREENS :::::
 const AllScreens = () => (
-  <AllStacks.Navigator initialRouteName="Login" screenOptions={{ header: () => null, cardStyle: {} }}>
+  <AllStacks.Navigator initialRouteName="Splash" screenOptions={{ header: () => null, cardStyle: {} }}>
     <AllStacks.Screen name="Main" component={MainScreens} />
     <AllStacks.Screen name="Login" component={LoginScreens} />
     <AllStacks.Screen name="Register" component={RegisterScreens} />
+    <AllStacks.Screen name="Splash" component={Splash} />
     {/* <AllStacks.Screen name="About" component={AboutScreens} /> */}
   </AllStacks.Navigator>
 );

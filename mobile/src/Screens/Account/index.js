@@ -7,34 +7,41 @@ const Account = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.Account);
   const { attendantCollections } = useSelector((state) => state.Collections);
-  const [ state, setState ] = React.useState({ attendantId: '6138887ea3ffff58389e38e9', nextPage: 1, limit: 10 });
+  const [ state, setState ] = React.useState({ nextPage: 1, limit: 10 });
 
   React.useEffect(() => {
     // getAccount();
     // getAttendantCollections();
   }, []);
 
-  const getAccount = () => {
-    const { attendantId } = state;
-    dispatch.Account.getAccount({
-      attendantId,
-      callback: (res) => {
-        if (!res.success) return alert(res.result);
-        const { nextPage, totalDocuments: total, ...rest } = res;
-      }
-    });
-  };
+  // const getAccount = () => {
+  //   const { attendantId } = state;
+  //   dispatch.Account.getAccount({
+  //     attendantId: user._id,
+  //     callback: (res) => {
+  //       if (!res.success) return alert(res.result);
+  //       const { nextPage, totalDocuments: total, ...rest } = res;
+  //     }
+  //   });
+  // };
+
+  console.log('USER---->', user);
 
   const getAttendantCollections = () => {
     const { attendantId, nextPage: page, limit } = state;
     dispatch.Collections.getAttendantCollections({
-      attendantId,
+      attendantId: user._id,
       page,
       limit,
       callback: (res) => {
+        console.log('collections', res);
         if (!res.success) return alert(res.result);
       }
     });
+  };
+
+  const logout = () => {
+    dispatch.Account.set;
   };
 
   return (

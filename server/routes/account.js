@@ -7,5 +7,6 @@ Router.post('/login', account.login);
 Router.get('/district/:district', account.getCollectorsByDistrict);
 Router.get('/all', account.getAllCollectors);
 Router.get('/:accountType/:uid', account.getAccount);
+// Router.get('/statistics/:uid', account.getAccount);
 
 module.exports = Router;

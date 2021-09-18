@@ -7,8 +7,8 @@ const Button = ({ onPress, extStyles, txtStyles, title, color = '#fff', loading 
     <Pressable
       style={{
         width: '100%',
-        height: RFValue(50),
-        backgroundColor: loading ? '#01020360' : '#010203',
+        height: RFValue(40),
+        backgroundColor: loading ? '#ddd' : '#010203',
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
@@ -18,7 +18,7 @@ const Button = ({ onPress, extStyles, txtStyles, title, color = '#fff', loading 
       onPress={onPress}
     >
       {loading && <ActivityIndicator size={RFValue(16)} color={color} style={{ marginRight: RFValue(10) }} />}
-      <Text style={{ color, fontSize: RFValue(16), ...txtStyles }}>{title}</Text>
+      <Text style={{ color, fontSize: RFValue(14), ...txtStyles }}>{title}</Text>
     </Pressable>
   );
 };

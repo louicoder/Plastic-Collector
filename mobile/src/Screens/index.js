@@ -5,5 +5,6 @@ import About from './About';
 import Login from './Login';
 import Register from './Register';
 import AddColleciton from './AddColleciton';
+import Splash from './Splash';
 
-export { Home, Account, About, Filter, Login, Register, AddColleciton };
+export { Home, Account, About, Filter, Login, Register, AddColleciton, Splash };
