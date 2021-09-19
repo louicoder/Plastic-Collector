@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Pressable, Dimensions, Keyboard } from 'react-native';
+import { View, Text, Pressable, Dimensions, Keyboard, Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,18 +10,32 @@ import Companies from './Companies';
 import Measurements from './Measurements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-gesture-handler';
+import ActiveDropper from './ActiveDropper';
 
 const { height, width } = Dimensions.get('window');
-const AddCollection = ({ setStatex, registerDrop, setQty, ...statex }) => {
+const AddCollection = ({ setStatex, registerDrop, setQty, showDroppers, changeMainComp, ...statex }) => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.loading.effects.Collections);
   const [ state, setState ] = React.useState({ total: '', typesBreakdown: [] });
+  const { user } = useSelector((state) => state.Account);
   const { activeDropper } = useSelector((state) => state.Droppers);
   const { payload } = useSelector((state) => state.Collections);
 
-  const registerCollection = () => {
+  const createCollection = () => {
+    if (!payload.typesBreakdown.length)
+      return Alert.alert(
+        'Missing information',
+        'You need to add atleast one package to complete this collection record, try again'
+      );
+    if (!activeDropper._id)
+      return Alert.alert(
+        'Missing dropper',
+        'Please add the person who owns this collection or register one and add them to it'
+      );
+
+    const payload = { attendantId: user._id, dropperId: activeDropper._id, district: user.district };
     dispatch.Collections.createCollection({
-      payload: collection,
+      payload: {},
       callback: (res) => {
         console.log('After regisering collection', res);
         if (!res.success) return alert(res.result);
@@ -35,58 +49,24 @@ const AddCollection = ({ setStatex, registerDrop, setQty, ...statex }) => {
     Keyboard.dismiss();
     dispatch.Collections.setPayload({
       ...payload,
-      total: '',
       typesBreakdown: [
         ...payload.typesBreakdown,
-        { company, measurement, total: payload.total, id: Math.random().toString(36).slice(2) }
-      ]
+        {
+          company: payload.company,
+          measurement: payload.measurement,
+          total: payload.total,
+          id: Math.random().toString(36).slice(2)
+        }
+      ],
+      total: '',
+      company: '',
+      measurement: ''
     });
   };
 
   return (
     <View style={{ flex: 1 }} keyboardShouldPersistTaps="handled">
-      {activeDropper.name && (
-        <View
-          style={{
-            marginBottom: RFValue(0),
-            borderWidth: 1,
-            borderColor: '#ddd',
-            padding: RFValue(10),
-            borderRadius: 5
-          }}
-        >
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <View
-                style={{
-                  height: RFValue(40),
-                  width: RFValue(40),
-                  borderRadius: 40,
-                  backgroundColor: '#eee',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginRight: RFValue(10)
-                }}
-              >
-                <DesignIcon name="user" color="#aaa" />
-              </View>
-              <View>
-                <Text style={{ fontFamily: 'opensans-bold', textTransform: 'capitalize' }}>{activeDropper.name}</Text>
-                <Text style={{ fontFamily: 'opensans-regular', color: '#aaa' }}>
-                  {activeDropper.gender} ・ Added {moment(activeDropper.dateCreated).fromNow()}
-                </Text>
-              </View>
-            </View>
-
-            <Pressable
-              onPress={() => dispatch.Droppers.setActiveDropper({})}
-              style={{ height: RFValue(30), width: RFValue(30), alignItems: 'center', justifyContent: 'center' }}
-            >
-              <DesignIcon name="close" color="#000" />
-            </Pressable>
-          </View>
-        </View>
-      )}
+      <ActiveDropper showDroppers={showDroppers} />
 
       <View
         style={{
@@ -105,14 +85,14 @@ const AddCollection = ({ setStatex, registerDrop, setQty, ...statex }) => {
           {
             title: 'Select company',
             onPress: () => setStatex({ ...state, comp: 'companies', isVisible: true, modalTitle: 'Select company' }),
-            value: statex.company,
+            value: payload.company,
             caption: 'companies'
           },
           {
             title: 'Select quantity',
             onPress: () =>
               setStatex({ ...state, comp: 'measurements', isVisible: true, modalTitle: 'Select quantity' }),
-            value: statex.measurement,
+            value: payload.measurement,
             caption: 'measurement',
             noCaps: true
           }
@@ -140,7 +120,7 @@ const AddCollection = ({ setStatex, registerDrop, setQty, ...statex }) => {
             >
               {value ? value : title}
             </Text>
-            <DesignIcon name="chevron-right" pkg="mc" color="#aaa" />
+            <DesignIcon name="chevron-down" pkg="mc" color="#000" />
           </Pressable>
         ))}
         <Input
@@ -154,7 +134,11 @@ const AddCollection = ({ setStatex, registerDrop, setQty, ...statex }) => {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
           <Button extStyles={{ width: '49%' }} title="Add package" onPress={submitPackage} />
 
-          <Button extStyles={{ width: '49%' }} title="Submit collection" onPress={() => registerCollection} />
+          <Button
+            extStyles={{ width: '49%', backgroundColor: '#ff7d00' }}
+            title="Submit collection"
+            onPress={() => changeMainComp('finish')}
+          />
         </View>
       </View>
 
@@ -162,27 +146,45 @@ const AddCollection = ({ setStatex, registerDrop, setQty, ...statex }) => {
         Added packages to collection
       </Text>
       <View style={{ flexShrink: 1 }}>
-        <ScrollView style={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
-          {payload.typesBreakdown &&
-            payload.typesBreakdown.map((r, index) => (
+        {payload.typesBreakdown && payload.typesBreakdown.length ? (
+          <ScrollView style={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+            {payload.typesBreakdown.map((r, index) => (
               <View
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
-                  padding: RFValue(10),
-                  backgroundColor: '#eee',
-                  marginBottom: RFValue(10)
+                  paddingHorizontal: RFValue(10),
+                  backgroundColor: '#d8f3dc',
+                  marginBottom: RFValue(10),
+                  height: RFValue(60)
                 }}
               >
+                <View
+                  style={{
+                    width: RFValue(40),
+                    height: RFValue(40),
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: '#000',
+                    borderRadius: 50,
+                    marginRight: RFValue(10)
+                  }}
+                >
+                  <Text style={{ fontSize: RFValue(20), color: '#fff' }}>{index + 1}</Text>
+                </View>
                 <View style={{ flexGrow: 1 }}>
-                  <Text style={{ fontFamily: 'opensans-bold', fontSize: RFValue(18), textTransform: 'uppercase' }}>
+                  <Text
+                    style={{
+                      fontFamily: 'opensans-bold',
+                      fontSize: RFValue(14),
+                      textTransform: 'uppercase',
+                      color: '#3e1f47'
+                    }}
+                  >
                     {r.company}
                   </Text>
-                  <Text style={{ fontFamily: 'opensans-regular', fontSize: RFValue(14) }}>
-                    Measurement - {r.measurement}
-                  </Text>
-                  <Text style={{ fontFamily: 'opensans-regular', fontSize: RFValue(14) }}>
-                    Number of Bottles - {r.total}
+                  <Text style={{ fontFamily: 'opensans-regular', fontSize: RFValue(14), color: '#000' }}>
+                    {r.measurement} <Text style={{ color: '#aaa' }}> ● </Text> {r.total} Bottles
                   </Text>
                 </View>
                 <Pressable
@@ -198,7 +200,23 @@ const AddCollection = ({ setStatex, registerDrop, setQty, ...statex }) => {
                 </Pressable>
               </View>
             ))}
-        </ScrollView>
+          </ScrollView>
+        ) : (
+          <View
+            style={{
+              height: '95%',
+              backgroundColor: '#eee',
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center'
+              // marginBottom: RFValue(10)
+            }}
+          >
+            <Text style={{ fontFamily: 'opensans-regular', fontSize: RFValue(14), color: '#aaa' }}>
+              Start adding packages to this collection
+            </Text>
+          </View>
+        )}
       </View>
     </View>
   );

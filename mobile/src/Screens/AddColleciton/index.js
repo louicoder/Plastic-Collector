@@ -8,6 +8,7 @@ import RegDropper from './RegDropper';
 import AddDrop from './AddDrop';
 import Measurements from './Measurements';
 import Companies from './Companies';
+import Finish from './Finish';
 
 const { height } = Dimensions.get('window');
 const AddCollection = ({ navigation }) => {
@@ -48,8 +49,7 @@ const AddCollection = ({ navigation }) => {
 
   React.useEffect(() => {
     navigation.setParams({
-      onPressAction: () =>
-        setState({ ...state, mainComp: 'regdropper', isVisible: true, comp: 'droppers', modalTitle: 'Select dropper' })
+      onPressAction: () => setState({ ...state, isVisible: true, comp: 'droppers', modalTitle: 'Select dropper' })
     });
   }, []);
 
@@ -79,12 +79,12 @@ const AddCollection = ({ navigation }) => {
     });
   };
 
-  const RenderModalContent = ({ comp, closeModal, setCompany, setMeasurement }) => {
+  const RenderModalContent = ({ comp, closeModal, setCompany, setMeasurement, createDropper }) => {
     switch (comp) {
       case 'droppers':
-        return <Droppers closeModal={closeModal} />;
+        return <Droppers closeModal={closeModal} createDropper={createDropper} />;
       case 'companies':
-        return <Companies closeModal={closeModal} onPress={setCompany} />;
+        return <Companies closeModal={setCompany} />;
       case 'measurements':
         return <Measurements closeModal={closeModal} onPress={setMeasurement} />;
       default:
@@ -99,14 +99,27 @@ const AddCollection = ({ navigation }) => {
     setAdddrop,
     setStatex,
     state,
+    showDroppers,
+    changeMainComp,
     setQty,
     ...rest
   }) => {
     switch (mainComp) {
       case 'regdropper':
         return <RegDropper district={district} setAdddrop={setAdddrop} />;
+      case 'finish':
+        return <Finish showDroppers={showDroppers} changeMainComp={changeMainComp} />;
       case 'adddrop':
-        return <AddDrop {...state} registerDropper={registerDropper} setStatex={(x) => setStatex(x)} setQty={setQty} />;
+        return (
+          <AddDrop
+            {...state}
+            registerDropper={registerDropper}
+            setStatex={(x) => setStatex(x)}
+            showDroppers={showDroppers}
+            // submitCollection={submitCollection}
+            changeMainComp={changeMainComp}
+          />
+        );
     }
   };
 
@@ -150,6 +163,7 @@ const AddCollection = ({ navigation }) => {
             </Pressable>
           </View>
           <RenderModalContent
+            createDropper={() => setState({ ...state, isVisible: false, mainComp: 'regdropper' })}
             setCompany={(company) =>
               setState({ ...state, company, comp: 'measurements', modalTitle: 'Select quantity' })}
             setMeasurement={(measurement) => setState({ ...state, measurement, comp: 'companies', isVisible: false })}
@@ -163,6 +177,8 @@ const AddCollection = ({ navigation }) => {
       </BottomSheet>
       <View style={{ flex: 1 }}>
         <RenderMainContent
+          showDroppers={(comp) =>
+            setState({ ...state, isVisible: true, comp: 'droppers', modalTitle: 'Select dropper' })}
           state={state}
           page={state.nextPage}
           limit={state.limit}
@@ -174,6 +190,7 @@ const AddCollection = ({ navigation }) => {
           setActiveDropper={(activeDropper) => setState({ ...state, activeDropper })}
           mainComp={state.mainComp}
           changeMainComp={(mainComp) => setState({ ...state, mainComp })}
+          submitCollection={() => setState({ ...state, mainComp: 'finish' })}
         />
       </View>
     </View>

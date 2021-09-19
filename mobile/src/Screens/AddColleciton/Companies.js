@@ -3,11 +3,15 @@ import { View, Text, Pressable, Dimensions } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useDispatch, useSelector } from 'react-redux';
 import { DesignIcon } from '../../Components';
 import { COMPANIES } from '../../Utils/Constants';
 
 const { height } = Dimensions.get('window');
-const Companies = ({ onPress }) => {
+const Companies = ({ closeModal }) => {
+  const dispatch = useDispatch();
+  const { payload } = useSelector((state) => state.Collections);
+
   return (
     <View style={{ height: 0.8 * height }}>
       <FlatList
@@ -15,9 +19,13 @@ const Companies = ({ onPress }) => {
         showsVerticalScrollIndicator={false}
         keyExtractor={() => Math.random().toString(36).slice(2)}
         data={COMPANIES}
-        renderItem={({ item, index }) => (
+        renderItem={({ item: company, index }) => (
           <Pressable
-            onPress={() => onPress(item)}
+            // onPress={() => onPress(item)}
+            onPress={() => {
+              dispatch.Collections.setPayload({ ...payload, company });
+              closeModal();
+            }}
             style={{
               flexDirection: 'row',
               alignItems: 'center',
@@ -26,7 +34,7 @@ const Companies = ({ onPress }) => {
               marginBottom: RFValue(5),
               padding: RFValue(10),
               borderRadius: 5,
-              marginBottom: index + 1 === COMPANIES.length ? RFValue(50) : RFValue(10)
+              marginBottom: index + 1 === COMPANIES.length ? RFValue(30) : RFValue(10)
             }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -44,10 +52,14 @@ const Companies = ({ onPress }) => {
                 <DesignIcon name="user" color="#aaa" />
               </View>
               <Text style={{ fontFamily: 'opensans-regular', fontSize: RFValue(16), textTransform: 'capitalize' }}>
-                {item}
+                {company}
               </Text>
             </View>
-            <DesignIcon name="chevron-right" pkg="mc" color="#aaa" />
+            <DesignIcon
+              name={payload.company === company ? 'check' : 'chevron-right'}
+              pkg="mc"
+              color={payload.company === company ? '#000' : '#aaa'}
+            />
           </Pressable>
         )}
       />

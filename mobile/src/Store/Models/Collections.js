@@ -7,7 +7,7 @@ export default {
     districtCollections: [],
     attendantCollections: [],
     dropperCollections: [],
-    payload: { typesBreakdown: [], total: '' }
+    payload: { typesBreakdown: [], total: '', measurement: '', company: '', totalweight: '' }
   },
 
   //  Reducers :::
@@ -33,13 +33,24 @@ export default {
   effects: (dispatch) => ({
     // create a new collection :::
     async createCollection ({ callback, payload }, state) {
+      // console.log('PAYLad', payload);
       try {
         await AXIOS('collections').post(`/create`, payload).then(({ data }) => {
-          if (data.success)
+          console.log('Data', data);
+          if (data.success) {
             dispatch.Collections.setAttendantCollections([ ...state.Collections.attendantCollections, data.result ]);
-          dispatch.Collections.setSubmission({});
+            dispatch.Collections.setPayload({
+              typesBreakdown: [],
+              total: '',
+              measurement: '',
+              company: '',
+              totalweight: ''
+            });
+            dispatch.Droppers.setActiveDropper({});
+          }
           return callback(data);
         });
+        return callback({ success: true });
       } catch (error) {
         return callback({ success: false, result: error });
       }

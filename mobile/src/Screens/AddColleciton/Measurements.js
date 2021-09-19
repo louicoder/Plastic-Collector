@@ -2,19 +2,26 @@ import React from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { useDispatch, useSelector } from 'react-redux';
 import { DesignIcon } from '../../Components';
 import { MEASUREMENTS } from '../../Utils/Constants';
 
-const Measurements = ({ onPress }) => {
+const Measurements = ({ closeModal }) => {
+  const dispatch = useDispatch();
+  const { payload } = useSelector((state) => state.Collections);
+
   return (
     <FlatList
       showsVerticalScrollIndicator={false}
       style={{ flexGrow: 1 }}
       keyExtractor={() => Math.random().toString(36).slice(2)}
       data={MEASUREMENTS}
-      renderItem={({ item: { label, value }, index }) => (
+      renderItem={({ item: { label, value: measurement }, index }) => (
         <Pressable
-          onPress={() => onPress(value)}
+          onPress={() => {
+            dispatch.Collections.setPayload({ ...payload, measurement });
+            closeModal();
+          }}
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -41,7 +48,11 @@ const Measurements = ({ onPress }) => {
             </View>
             <Text style={{ fontFamily: 'opensans-regular', fontSize: RFValue(16) }}>{label}</Text>
           </View>
-          <DesignIcon name="chevron-right" pkg="mc" color="#aaa" />
+          <DesignIcon
+            name={payload.measurement === measurement ? 'check' : 'chevron-right'}
+            pkg="mc"
+            color={payload.measurement === measurement ? '#000' : '#aaa'}
+          />
         </Pressable>
       )}
     />
