@@ -49,7 +49,7 @@ const Finish = ({ showDroppers, changeMainComp }) => {
   // console.log(user.district);
   return (
     <View style={{ flex: 1 }}>
-      <Text style={{ marginVertical: RFValue(10), fontFamily: 'opensans-regular', fontSize: RFValue(14) }}>
+      <Text style={{ marginVertical: RFValue(10), fontFamily: 'OpenSans-Regular', fontSize: RFValue(14) }}>
         Enter the total weight of all the pkgs below in kilograms:
       </Text>
       <Input
@@ -59,7 +59,7 @@ const Finish = ({ showDroppers, changeMainComp }) => {
         onChangeText={(totalweight) => dispatch.Collections.setPayload({ ...payload, totalweight })}
       />
 
-      <Text style={{ marginBottom: RFValue(10), fontFamily: 'opensans-bold', fontSize: RFValue(14) }}>
+      <Text style={{ marginBottom: RFValue(10), fontFamily: 'OpenSans-Bold', fontSize: RFValue(14) }}>
         Dropper details:
       </Text>
       <View>
@@ -67,7 +67,7 @@ const Finish = ({ showDroppers, changeMainComp }) => {
       </View>
 
       <View style={{ padding: RFValue(10), backgroundColor: '#fff', marginVertical: RFValue(15) }}>
-        <Text style={{ fontFamily: 'opensans-bold', fontSize: RFValue(18) }}>
+        <Text style={{ fontFamily: 'OpenSans-Bold', fontSize: RFValue(18) }}>
           {totalCollection} - bottles collected
         </Text>
       </View>

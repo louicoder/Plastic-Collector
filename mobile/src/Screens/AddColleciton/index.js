@@ -147,19 +147,19 @@ const AddCollection = ({ navigation }) => {
               marginBottom: RFValue(15)
             }}
           >
-            <Text style={{ fontFamily: 'opensans-regular', fontSize: RFValue(20) }}>{state.modalTitle}</Text>
+            <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(20) }}>{state.modalTitle}</Text>
             <Pressable
               onPress={() => setState({ ...state, isVisible: false })}
               style={{
                 height: RFValue(40),
                 width: RFValue(40),
                 alignItems: 'center',
-                backgroundColor: '#eee',
+                backgroundColor: '#eeeeee90',
                 justifyContent: 'center',
                 borderRadius: 40
               }}
             >
-              <DesignIcon name="close" color="#aaa" />
+              <DesignIcon name="close" color="#000" />
             </Pressable>
           </View>
           <RenderModalContent

@@ -5,7 +5,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { useDispatch, useSelector } from 'react-redux';
 import { DesignIcon } from '../../Components';
 
-const ActiveDropper = ({ showDroppers }) => {
+const ActiveDropper = ({ showDroppers, extStyles }) => {
   const { activeDropper } = useSelector((state) => state.Droppers);
   const dispatch = useDispatch();
 
@@ -18,7 +18,8 @@ const ActiveDropper = ({ showDroppers }) => {
         paddingHorizontal: RFValue(10),
         height: RFValue(60),
         borderRadius: 5,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        ...extStyles
       }}
     >
       {activeDropper.name ? (
@@ -38,10 +39,10 @@ const ActiveDropper = ({ showDroppers }) => {
               <DesignIcon name="user" color="#000" />
             </View>
             <View>
-              <Text style={{ fontFamily: 'opensans-bold', textTransform: 'capitalize', fontSize: RFValue(15) }}>
+              <Text style={{ fontFamily: 'OpenSans-Bold', textTransform: 'capitalize', fontSize: RFValue(15) }}>
                 {activeDropper.name}
               </Text>
-              <Text style={{ fontFamily: 'opensans-regular', color: '#0353a4' }}>
+              <Text style={{ fontFamily: 'OpenSans-Regular', color: '#0353a4' }}>
                 {activeDropper.gender} ・ Added {moment(activeDropper.dateCreated).fromNow()}
               </Text>
             </View>

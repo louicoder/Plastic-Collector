@@ -147,7 +147,8 @@ const MainScreens = () => (
       },
       tabBarActiveTintColor: '#fff',
       headerShown: false,
-      tabBarShowLabel: false
+      tabBarShowLabel: false,
+      tabBarHideOnKeyboard: true
     }}
   >
     <BottomTabs.Screen

@@ -39,7 +39,7 @@ const RegDropper = ({ setAdddrop }) => {
         {/* <Text style={{ marginVertical: RFValue(15), fontSize: RFValue(18), fontWeight: 'bold' }}>
           Register new dropper:
         </Text> */}
-        <Text style={{ marginVertical: RFValue(15), fontSize: RFValue(14), fontFamily: 'opensans-regular' }}>
+        <Text style={{ marginVertical: RFValue(15), fontSize: RFValue(14), fontFamily: 'OpenSans-Regular' }}>
           Enter the information below about the dropper to start collecting their packages.
         </Text>
         <Input

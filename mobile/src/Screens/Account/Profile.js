@@ -23,6 +23,7 @@ const Profile = () => {
       if (!res.success) return Alert.alert('Something went wrong', res.result);
       dispatch.Account.setUser({});
       dispatch.Account.setStatistics({ collections: [], droppers: [] });
+      dispatch.Collections.setDistrictColletions([]);
       navigation.navigate('Login');
     });
   };
@@ -52,8 +53,8 @@ const Profile = () => {
         >
           <DesignIcon name="user" size={50} color="#aaa" />
         </Pressable>
-        <Text style={{ fontFamily: 'opensans-bold', fontSize: RFValue(18), marginTop: RFValue(10) }}>{user.name}</Text>
-        <Text style={{ fontFamily: 'opensans-regular', fontSize: RFValue(16), color: '#000' }}>{user.phoneNumber}</Text>
+        <Text style={{ fontFamily: 'OpenSans-Bold', fontSize: RFValue(18), marginTop: RFValue(10) }}>{user.name}</Text>
+        <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(16), color: '#000' }}>{user.phoneNumber}</Text>
       </View>
 
       <Pressable
@@ -70,7 +71,7 @@ const Profile = () => {
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <DesignIcon name="lock" size={28} />
-          <Text style={{ fontFamily: 'opensans-regular', fontSize: RFValue(16), marginLeft: RFValue(10) }}>
+          <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(16), marginLeft: RFValue(10) }}>
             Logout of your account
           </Text>
         </View>
@@ -107,8 +108,8 @@ const Profile = () => {
               paddingVertical: RFValue(15)
             }}
           >
-            <Text style={{ fontFamily: 'opensans-regular', fontSize: RFValue(16), color: '#aaa' }}>{title}</Text>
-            <Text style={{ fontFamily: 'opensans-bold', fontSize: RFValue(30) }}>{stat}</Text>
+            <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(16), color: '#aaa' }}>{title}</Text>
+            <Text style={{ fontFamily: 'OpenSans-Bold', fontSize: RFValue(30) }}>{stat}</Text>
           </View>
         ))}
       </View>

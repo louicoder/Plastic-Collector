@@ -3,7 +3,7 @@ import { View, Text, Pressable, Dimensions, Keyboard, Alert } from 'react-native
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useDispatch, useSelector } from 'react-redux';
-import { BottomSheet, Button, DesignIcon, Input } from '../../Components';
+import { BottomSheet, Button, DesignIcon, Input, PackagePreview } from '../../Components';
 import Droppers from './Droppers';
 import moment from 'moment';
 import Companies from './Companies';
@@ -66,7 +66,7 @@ const AddCollection = ({ setStatex, registerDrop, setQty, showDroppers, changeMa
 
   return (
     <View style={{ flex: 1 }} keyboardShouldPersistTaps="handled">
-      <ActiveDropper showDroppers={showDroppers} />
+      <ActiveDropper showDroppers={showDroppers} extStyles={{ marginTop: RFValue(15) }} />
 
       <View
         style={{
@@ -113,7 +113,7 @@ const AddCollection = ({ setStatex, registerDrop, setQty, showDroppers, changeMa
             <Text
               style={{
                 textTransform: noCaps ? 'none' : 'capitalize',
-                fontFamily: 'opensans-regular',
+                fontFamily: 'OpenSans-Regular',
                 fontSize: RFValue(14),
                 color: value ? '#000' : '#aaa'
               }}
@@ -142,64 +142,13 @@ const AddCollection = ({ setStatex, registerDrop, setQty, showDroppers, changeMa
         </View>
       </View>
 
-      <Text style={{ fontFamily: 'opensans-bold', marginVertical: RFValue(10), fontSize: RFValue(14) }}>
+      <Text style={{ fontFamily: 'OpenSans-Bold', marginVertical: RFValue(10), fontSize: RFValue(14) }}>
         Added packages to collection
       </Text>
       <View style={{ flexShrink: 1 }}>
         {payload.typesBreakdown && payload.typesBreakdown.length ? (
           <ScrollView style={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
-            {payload.typesBreakdown.map((r, index) => (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingHorizontal: RFValue(10),
-                  backgroundColor: '#d8f3dc',
-                  marginBottom: RFValue(10),
-                  height: RFValue(60)
-                }}
-              >
-                <View
-                  style={{
-                    width: RFValue(40),
-                    height: RFValue(40),
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backgroundColor: '#000',
-                    borderRadius: 50,
-                    marginRight: RFValue(10)
-                  }}
-                >
-                  <Text style={{ fontSize: RFValue(20), color: '#fff' }}>{index + 1}</Text>
-                </View>
-                <View style={{ flexGrow: 1 }}>
-                  <Text
-                    style={{
-                      fontFamily: 'opensans-bold',
-                      fontSize: RFValue(14),
-                      textTransform: 'uppercase',
-                      color: '#3e1f47'
-                    }}
-                  >
-                    {r.company}
-                  </Text>
-                  <Text style={{ fontFamily: 'opensans-regular', fontSize: RFValue(14), color: '#000' }}>
-                    {r.measurement} <Text style={{ color: '#aaa' }}> ● </Text> {r.total} Bottles
-                  </Text>
-                </View>
-                <Pressable
-                  onPress={() =>
-                    dispatch.Collections.setPayload({
-                      ...payload,
-                      typesBreakdown: payload.typesBreakdown && [
-                        ...payload.typesBreakdown.filter((x) => x.id !== r.id)
-                      ]
-                    })}
-                >
-                  <DesignIcon name="close" />
-                </Pressable>
-              </View>
-            ))}
+            {payload.typesBreakdown.map((item, index) => <PackagePreview index={index} {...item} />)}
           </ScrollView>
         ) : (
           <View
@@ -212,7 +161,7 @@ const AddCollection = ({ setStatex, registerDrop, setQty, showDroppers, changeMa
               // marginBottom: RFValue(10)
             }}
           >
-            <Text style={{ fontFamily: 'opensans-regular', fontSize: RFValue(14), color: '#aaa' }}>
+            <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(14), color: '#aaa' }}>
               Start adding packages to this collection
             </Text>
           </View>

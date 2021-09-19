@@ -7,7 +7,8 @@ export default {
     districtCollections: [],
     attendantCollections: [],
     dropperCollections: [],
-    payload: { typesBreakdown: [], total: '', measurement: '', company: '', totalweight: '' }
+    payload: { typesBreakdown: [], total: '', measurement: '', company: '', totalweight: '' },
+    activeCollection: {}
   },
 
   //  Reducers :::
@@ -26,6 +27,9 @@ export default {
     },
     setPayload (state, payload) {
       return { ...state, payload };
+    },
+    setActiveCollection (state, activeCollection) {
+      return { ...state, activeCollection };
     }
   },
 

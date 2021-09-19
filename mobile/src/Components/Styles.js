@@ -25,7 +25,7 @@ export default StyleSheet.create({
     paddingHorizontal: RFValue(10),
     color: '#010203',
     borderWidth: 1,
-    fontFamily: 'opensans-regular'
+    fontFamily: 'OpenSans-Regular'
   }),
   inputContainer: {
     width: '100%',

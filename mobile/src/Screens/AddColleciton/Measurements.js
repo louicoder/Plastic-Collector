@@ -46,7 +46,7 @@ const Measurements = ({ closeModal }) => {
             >
               <DesignIcon name="user" color="#aaa" />
             </View>
-            <Text style={{ fontFamily: 'opensans-regular', fontSize: RFValue(16) }}>{label}</Text>
+            <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(16) }}>{label}</Text>
           </View>
           <DesignIcon
             name={payload.measurement === measurement ? 'check' : 'chevron-right'}
