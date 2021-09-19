@@ -85,6 +85,21 @@ const getAccount = async (req, res) => {
   }
 };
 
+const getAttendantStatistics = async (req, res) => {
+  if (!req.params.uid) return MissingField(res, 'Account Type');
+  // if()
+
+  const { uid: attendantId } = req.params;
+  try {
+    const collections = await COLL.find({ attendantId });
+    const droppers = await DR.find({ attendantId });
+    // if (!result) return res.json({ succes: false, result: 'No user exists with that id, try again' });
+    return SuccessHandler(res, { collections, droppers });
+  } catch (error) {
+    return ErrorHandler(res, error);
+  }
+};
+
 const getCollectorsByDistrict = async (req, res) => {
   if (!req.params.district) return MissingField(res, 'District name');
   const { page = 1, limit = 2 } = req.query;
@@ -115,4 +130,12 @@ const getAllCollectors = async (req, res) => {
   }
 };
 
-module.exports = { register, login, updateAccount, getAccount, getCollectorsByDistrict, getAllCollectors };
+module.exports = {
+  register,
+  login,
+  updateAccount,
+  getAccount,
+  getCollectorsByDistrict,
+  getAllCollectors,
+  getAttendantStatistics
+};

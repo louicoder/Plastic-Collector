@@ -41,7 +41,6 @@ const Finish = ({ showDroppers, changeMainComp }) => {
     dispatch.Collections.createCollection({
       payload: payloadx,
       callback: ({ result, success }) => {
-        console.log('Creating collection', result);
         if (!success) return Alert.alert('Someting went wrong', result);
         changeMainComp('adddrop');
       }

@@ -1,10 +1,13 @@
 import { AXIOS, setAsyncStorage } from '../../Utils/Functions';
 
 export default {
-  state: { user: {}, attendantDroppers: [] }, // initial state
+  state: { user: {}, attendantDroppers: [], statistics: { collections: [], droppers: [] } }, // initial state
   reducers: {
     setUser (state, user) {
       return { ...state, user };
+    },
+    setStatistics (state, statistics) {
+      return { ...state, statistics };
     }
   },
   effects: (dispatch) => ({
@@ -43,6 +46,19 @@ export default {
       try {
         await AXIOS('account').get(`/attendant/${attendantId}`).then(({ data }) => {
           if (data.success) dispatch.Account.setUser(data.result);
+          return callback(data);
+        });
+      } catch (error) {
+        return callback({ success: false, result: error });
+      }
+    },
+
+    // GEt attendant account
+    async getAttendantStatistics ({ attendantId, callback }, state) {
+      try {
+        await AXIOS('account').get(`/statistics/${attendantId}`).then(({ data }) => {
+          console.log('stats---', data);
+          if (data.success) dispatch.Account.setStatistics(data.result);
           return callback(data);
         });
       } catch (error) {
