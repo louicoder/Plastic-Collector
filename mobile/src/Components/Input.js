@@ -14,6 +14,7 @@ const Input = ({
   placeholder,
   kbt = 'default',
   onChangeText,
+  onSubmitEditing,
   type
 }) => {
   // const [ value, setValue ] = React.useState('');
@@ -21,6 +22,7 @@ const Input = ({
     <View style={Styles.inputContainer}>
       {title && <Text style={{ fontSize: RFValue(12), textTransform: 'capitalize' }}>{title}</Text>}
       <TextInput
+        onSubmitEditing={onSubmitEditing}
         autoCompleteType="off"
         autoCapitalize="none"
         keyboardType={kbt}

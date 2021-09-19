@@ -30,6 +30,19 @@ const AddCollection = ({ setStatex, registerDrop, setQty, ...statex }) => {
     });
   };
 
+  const submitPackage = () => {
+    const { company, measurement } = statex;
+    Keyboard.dismiss();
+    dispatch.Collections.setPayload({
+      ...payload,
+      total: '',
+      typesBreakdown: [
+        ...payload.typesBreakdown,
+        { company, measurement, total: payload.total, id: Math.random().toString(36).slice(2) }
+      ]
+    });
+  };
+
   return (
     <View style={{ flex: 1 }} keyboardShouldPersistTaps="handled">
       {activeDropper.name && (
@@ -135,24 +148,11 @@ const AddCollection = ({ setStatex, registerDrop, setQty, ...statex }) => {
           kbt="number-pad"
           value={payload.total}
           onChangeText={(total) => dispatch.Collections.setPayload({ ...payload, total })}
+          onSubmitEditing={submitPackage}
         />
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
-          <Button
-            extStyles={{ width: '49%' }}
-            title="Add package"
-            onPress={() => {
-              const { company, measurement } = statex;
-              Keyboard.dismiss();
-              dispatch.Collections.setPayload({
-                ...payload,
-                typesBreakdown: [
-                  ...payload.typesBreakdown,
-                  { company, measurement, total: payload.total, id: Math.random().toString(36).slice(2) }
-                ]
-              });
-            }}
-          />
+          <Button extStyles={{ width: '49%' }} title="Add package" onPress={submitPackage} />
 
           <Button extStyles={{ width: '49%' }} title="Submit collection" onPress={() => registerCollection} />
         </View>
