@@ -9,6 +9,8 @@ import CollectionPreview from './CollectionPreview';
 import PackagePreview from './PackagePreview';
 import DropperSkeleton from './DropperSkeleton';
 import DistrictList from './DistrictList';
+import SelectField from './SelectField';
+import Logo from './Logo';
 
 export {
   Header,
@@ -21,5 +23,7 @@ export {
   CollectionPreview,
   PackagePreview,
   DropperSkeleton,
-  DistrictList
+  DistrictList,
+  SelectField,
+  Logo
 };

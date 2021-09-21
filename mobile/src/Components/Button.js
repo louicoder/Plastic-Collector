@@ -18,7 +18,7 @@ const Button = ({ onPress, extStyles, txtStyles, title, color = '#fff', loading 
       onPress={onPress}
     >
       {loading && <ActivityIndicator size={RFValue(16)} color={color} style={{ marginRight: RFValue(10) }} />}
-      <Text style={{ color, fontSize: RFValue(14), ...txtStyles }}>{title}</Text>
+      <Text style={{ color, fontSize: RFValue(14), fontFamily: 'OpenSans-Bold', ...txtStyles }}>{title}</Text>
     </Pressable>
   );
 };

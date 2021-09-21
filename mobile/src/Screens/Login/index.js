@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useDispatch, useSelector } from 'react-redux';
-import { BottomSheet, Button, Input, Password } from '../../Components';
+import { BottomSheet, Button, Input, Logo, Password } from '../../Components';
 import MaskInput from 'react-native-mask-input';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -25,8 +25,9 @@ const Login = ({ navigation: { navigate } }) => {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: RFValue(15) }}>
-      <Text style={{ fontSize: RFValue(16), marginVertical: RFValue(15) }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: RFValue(10) }}>
+      <Logo />
+      <Text style={{ fontSize: RFValue(14), marginVertical: RFValue(15), fontFamily: 'OpenSans-Regular' }}>
         Please enter your credentials to be able to use the platform
       </Text>
 
@@ -44,7 +45,9 @@ const Login = ({ navigation: { navigate } }) => {
       <MaskInput
         style={{
           height: RFValue(40),
-          backgroundColor: '#ddd',
+          // backgroundColor: '#ddd',
+          borderWidth: 1,
+          borderColor: '#ddd',
           width: '100%',
           paddingHorizontal: RFValue(10),
           fontSize: RFValue(14),
@@ -76,9 +79,11 @@ const Login = ({ navigation: { navigate } }) => {
           justifyContent: 'center'
         }}
       >
-        <Text style={{ fontSize: RFValue(16) }}>Not yet registered ?</Text>
+        <Text style={{ fontSize: RFValue(14), fontFamily: 'OpenSans-Regular' }}>Not yet registered ?</Text>
         <Pressable onPress={() => navigate('Register')}>
-          <Text style={{ fontSize: RFValue(16), color: 'blue', marginLeft: RFValue(10) }}>Register</Text>
+          <Text style={{ fontSize: RFValue(14), color: 'blue', marginLeft: RFValue(10), fontFamily: 'OpenSans-Bold' }}>
+            Register
+          </Text>
         </Pressable>
       </View>
     </View>

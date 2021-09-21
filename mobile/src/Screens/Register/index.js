@@ -4,14 +4,14 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import MaskInput from 'react-native-mask-input';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useDispatch, useSelector } from 'react-redux';
-import { BottomSheet, Button, DesignIcon, Input, Password } from '../../Components';
+import { BottomSheet, Button, DesignIcon, Input, Logo, Password, SelectField } from '../../Components';
 
 const { height } = Dimensions.get('window');
 const Register = ({ navigation }) => {
   const [ state, setState ] = React.useState({
     name: 'Mukasa Joseph ',
     password: 'password',
-    gender: '',
+    gender: 'male',
     phoneNumber: '0782131415',
     district: 'Kampala',
     passVisible: false,
@@ -43,22 +43,20 @@ const Register = ({ navigation }) => {
     <View style={{ flex: 1 }}>
       <BottomSheet isVisible={state.isVisible} closeModal={() => setState({ ...state, isVisible: false })}>
         <View>
-          <Text style={{ fontSize: RFValue(16), marginBottom: RFValue(15) }}>
-            Please select one option below that explains your gender:
-          </Text>
           {[ 'male', 'female' ].map((gender, index) => (
             <Pressable
               key={index + Math.random().toString(36).slice(2)}
               style={{ flexDirection: 'row', alignItems: 'center', marginBottom: RFValue(10) }}
-              onPress={() => setState({ ...state, gender })}
+              onPress={() => setState({ ...state, gender: gender === state.gender ? '' : gender })}
             >
               <DesignIcon pkg="mc" name={state.gender === gender ? 'checkbox-marked' : 'checkbox-blank-outline'} />
               <Text
                 style={{
                   fontSize: RFValue(16),
                   marginLeft: RFValue(10),
-                  fontWeight: state.gender === gender ? 'bold' : 'normal',
-                  textTransform: 'capitalize'
+                  // fontWeight: state.gender === gender ? 'bold' : 'normal',
+                  textTransform: 'capitalize',
+                  fontFamily: state.gender === gender ? 'OpenSans-Bold' : 'OpenSans-Regular'
                 }}
               >
                 {gender}
@@ -72,55 +70,34 @@ const Register = ({ navigation }) => {
         style={{ flex: 1, paddingTop: RFValue(30), paddingHorizontal: RFValue(10) }}
         keyboardShouldPersistTaps="handled"
       >
-        <Text style={{ marginVertical: RFValue(20), fontSize: RFValue(14) }}>
-          Please ensure to fill in all the fields below for easy verification of your account. Please make sure the
-          phone number you provide is the one you will be using and payments shall be done using that number
+        <Logo fSize={20} />
+        <Text style={{ marginVertical: RFValue(20), fontSize: RFValue(14), fontFamily: 'OpenSans-Regular' }}>
+          Please ensure to fill in all the fields below for easy verification of your account.
         </Text>
         <Input
           value={state.name}
           onChangeText={(name) => setState({ ...state, name })}
           placeholder="Full name e.g Mukasa Joseph"
         />
-        <Input
-          value={state.email}
-          onChangeText={(email) => setState({ ...state, email })}
-          placeholder="Email e.g mukas@gmail.com"
-          keyboardType="email"
-        />
-        <Pressable
+
+        <SelectField
           onPress={() => setState({ ...state, isVisible: true })}
-          style={{
-            width: '100%',
-            paddingHorizontal: RFValue(10),
-            backgroundColor: '#ddd',
-            height: RFValue(40),
-            marginBottom: RFValue(10),
-            alignItems: 'center',
-            flexDirection: 'row',
-            justifyContent: 'space-between'
-          }}
-        >
-          <Text
-            style={{
-              fontSize: RFValue(14),
-              color: state.gender ? '#000' : '#aaa',
-              textTransform: 'capitalize'
-            }}
-          >
-            {state.gender || 'Select your gender'}
-          </Text>
-          <DesignIcon name={state.isVisible ? 'chevron-up' : 'chevron-down'} pkg="mc" />
-        </Pressable>
-        <Input
-          value={state.district}
-          onChangeText={(district) => setState({ ...state, district })}
-          placeholder=" e.g Kampala"
+          value={state.gender}
+          placeholder="Slect your gender"
         />
+        <SelectField
+          onPress={() => setState({ ...state, isVisible: true })}
+          value={state.district}
+          placeholder="Slect your district"
+        />
+
         <MaskInput
           keyboardType="phone-pad"
           style={{
             height: RFValue(40),
-            backgroundColor: '#ddd',
+            // backgroundColor: '#ddd',
+            borderWidth: 1,
+            borderColor: '#ddd',
             width: '100%',
             paddingHorizontal: RFValue(10),
             fontSize: RFValue(14),
@@ -154,9 +131,13 @@ const Register = ({ navigation }) => {
             justifyContent: 'center'
           }}
         >
-          <Text style={{ fontSize: RFValue(16) }}>Already Registered ?</Text>
+          <Text style={{ fontSize: RFValue(14), fontFamily: 'OpenSans-Regular' }}>Already Registered ?</Text>
           <Pressable onPress={() => navigation.goBack()}>
-            <Text style={{ fontSize: RFValue(16), color: 'blue', marginLeft: RFValue(10) }}>Login here</Text>
+            <Text
+              style={{ fontSize: RFValue(14), color: 'blue', marginLeft: RFValue(10), fontFamily: 'OpenSans-Bold' }}
+            >
+              Login
+            </Text>
           </Pressable>
         </View>
       </KeyboardAwareScrollView>
