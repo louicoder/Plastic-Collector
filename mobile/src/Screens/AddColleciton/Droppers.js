@@ -15,6 +15,7 @@ const Droppers = ({ setActiveDropper, closeModal, createDropper }) => {
     <View style={{ flexGrow: 1 }}>
       {!loading.getAttendantDroppers ? (
         <FlatList
+          keyExtractor={(item) => item._id}
           ListEmptyComponent={() => (
             <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', height: RFValue(150) }}>
               <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(16), color: '#aaa' }}>

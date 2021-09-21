@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Alert, Dimensions } from 'react-native';
+import { View, Text, Alert, Dimensions, ActivityIndicator } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,10 +10,13 @@ import CollectionDetails from '../../Components/CollectionDetails';
 
 const { height } = Dimensions.get('window');
 const Filter = ({ navigation }) => {
-  const [ state, setState ] = React.useState({ district: 'kampala', nextPage: 1, limit: 100, isVisible: false });
+  const [ state, setState ] = React.useState({ district: 'kampala', nextPage: 1, limit: 6, isVisible: false });
+  const loading = useSelector((state) => state.loading.effects.Collections);
+
   const { districtCollections, collections, activeCollection } = useSelector((state) => state.Collections);
   const { user } = useSelector((state) => state.Account);
   const dispatch = useDispatch();
+  const [ momentum, setMomentum ] = React.useState(false);
 
   React.useEffect(
     () => {
@@ -24,46 +27,49 @@ const Filter = ({ navigation }) => {
   );
 
   // Get all collection , this is to be used by default but it' not a must
-  const getCollections = () => {
-    const { nextPage: page, limit } = state;
-    dispatch.Collections.getAllCollections({
-      page,
-      limit,
-      callback: (res) => {
-        if (!res.success) return alert(res.result);
-        const { nextPage, totalDocuments: total, ...rest } = res;
-        setState({ ...state, nextPage, total });
-      }
-    });
-  };
+  // const getCollections = () => {
+  //   const { nextPage: page, limit } = state;
+  //   dispatch.Collections.getAllCollections({
+  //     page,
+  //     limit,
+  //     callback: (res) => {
+  //       if (!res.success) return alert(res.result);
+  //       const { totalDocuments: total, ...rest } = res;
+  //       setState({ ...state, ...rest, total });
+  //     }
+  //   });
+  // };
 
   // get collections by district
   const getDistrictCollections = () => {
-    const { nextPage: page, limit, district } = state;
+    const { nextPage: page, limit } = state;
     dispatch.Collections.getDistrictCollections({
       page,
       limit,
       district: user.district,
-      callback: ({ result, success }) => {
+      callback: ({ result, success, ...rest }) => {
         if (!success) return Alert.alert('Something went wrong', result);
-
-        const { nextPage, totalDocuments: total, ...rest } = result;
-        setState({ ...state, nextPage, total });
+        // console.log('PAGE----->>><<<<<', result);
+        const { totalDocuments: total } = result;
+        setState({ ...state, ...rest, total });
       }
     });
   };
 
   return (
-    <View style={{ flex: 1, paddingHorizontal: RFValue(10) }}>
-      <BottomSheet isVisible={state.isVisible} closeModal={() => setState({ ...state, isVisible: false })}>
+    <View style={{ flex: 1, paddingHorizontal: RFValue(0) }}>
+      <BottomSheet
+        padded={false}
+        isVisible={state.isVisible}
+        closeModal={() => setState({ ...state, isVisible: false })}
+      >
         <View style={{ maxHeight: 0.9 * height }}>
-          <CollectionDetails {...activeCollection} />
+          <CollectionDetails {...activeCollection} showDropperContact />
         </View>
       </BottomSheet>
-      <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(14), marginVertical: RFValue(10) }}>
-        These are all the collections in {user.district} district
-      </Text>
+
       <FlatList
+        showsVerticalScrollIndicator={false}
         style={{ flexGrow: 1 }}
         data={districtCollections}
         keyExtractor={(item) => item._id}
@@ -76,6 +82,20 @@ const Filter = ({ navigation }) => {
             }}
           />
         )}
+        onEndReached={() => {
+          if (!state.last && !momentum) {
+            setMomentum(true);
+            return getDistrictCollections();
+          }
+        }}
+        onEndReachedThreshold={0.01}
+        onMomentumScrollBegin={() => setMomentum(false)}
+        ListFooterComponent={() =>
+          loading.getDistrictCollections && (
+            <View style={{ height: RFValue(50), backgroundColor: '#fff' }}>
+              <ActivityIndicator style={{ alignSelf: 'center', top: RFValue(10) }} color="#000" />
+            </View>
+          )}
       />
     </View>
   );

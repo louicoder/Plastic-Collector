@@ -5,18 +5,19 @@ import { RFValue } from 'react-native-responsive-fontsize';
 const DropperSkeleton = () => {
   return (
     <View>
-      {[ 0, 2, 3, 4, 5, 6 ].map(() => (
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: RFValue(15) }}>
+      {[ ...new Array(5).fill() ].map(() => (
+        <View
+          style={{ flexDirection: 'row', alignItems: 'center', marginBottom: RFValue(15) }}
+          key={Math.random().toString(36).slice(2)}
+        >
           <View
             style={{
-              width: RFValue(50),
-              height: RFValue(50),
-              borderRadius: 40,
-              backgroundColor: '#eee',
+              width: RFValue(45),
+              height: RFValue(45),
+              borderRadius: 45,
+              backgroundColor: '#eeeeee90',
               marginRight: RFValue(10),
-              // marginBottom: RFValue(15),
               alignItems: 'center',
-              // borderWidth: 1,
               flexDirection: 'row'
             }}
           />
@@ -27,10 +28,12 @@ const DropperSkeleton = () => {
                 borderRadius: 20,
                 marginBottom: RFValue(5),
                 width: RFValue(150),
-                backgroundColor: '#eee'
+                backgroundColor: '#eeeeee90'
               }}
             />
-            <View style={{ height: RFValue(15), borderRadius: 20, width: RFValue(250), backgroundColor: '#eee' }} />
+            <View
+              style={{ height: RFValue(15), borderRadius: 20, width: RFValue(250), backgroundColor: '#eeeeee90' }}
+            />
           </View>
         </View>
       ))}

@@ -18,4 +18,21 @@ const COMPANIES = [
 
 const MEASUREMENTS = [ '330ml', '500ml', '1litre', '1.5litres', '2litres' ];
 
-module.exports = { COMPANIES, MEASUREMENTS };
+const DISTRICTS = [
+  'kawempe division',
+  'makinkye division',
+  'nakawa division',
+  'Kampala central division',
+  'Rubaga division',
+  'wakiso district',
+  'mpigi district',
+  'mbarara city',
+  'Hoima city',
+  'masaka city',
+  'gulu city',
+  'jinja city',
+  'mbale city',
+  'fortportal city'
+];
+
+module.exports = { COMPANIES, MEASUREMENTS, DISTRICTS };

@@ -12,6 +12,22 @@ const Profile = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  React.useEffect(
+    () => {
+      getAttendantStatistics();
+    },
+    [ navigation ]
+  );
+
+  const getAttendantStatistics = () => {
+    dispatch.Account.getAttendantStatistics({
+      attendantId: user._id,
+      callback: ({ result, success }) => {
+        if (!success) return Alert.alert('Something went wrong', result);
+      }
+    });
+  };
+
   const totalPackages =
     statistics.collections && statistics.collections.reduce((p, c) => p + parseInt(c.totalCollection), 0);
   const totalWeight = statistics.collections && statistics.collections.reduce((p, c) => p + parseInt(c.totalweight), 0);
@@ -23,7 +39,8 @@ const Profile = () => {
       if (!res.success) return Alert.alert('Something went wrong', res.result);
       dispatch.Account.setUser({});
       dispatch.Account.setStatistics({ collections: [], droppers: [] });
-      dispatch.Collections.setDistrictColletions([]);
+      dispatch.Collections.setDistrictCollections([]);
+      dispatch.Droppers.setAttendantDroppers([]);
       navigation.navigate('Login');
     });
   };

@@ -4,38 +4,24 @@ import { TextInput } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 import Styles from './Styles';
 
-const Input = ({
-  value,
-  callback,
-  title,
-  extInputStyles,
-  error,
-  loading,
-  placeholder,
-  kbt = 'default',
-  onChangeText,
-  onSubmitEditing,
-  type
-}) => {
-  // const [ value, setValue ] = React.useState('');
-  return (
-    <View style={Styles.inputContainer}>
-      {title && <Text style={{ fontSize: RFValue(12), textTransform: 'capitalize' }}>{title}</Text>}
-      <TextInput
-        onSubmitEditing={onSubmitEditing}
-        autoCompleteType="off"
-        autoCapitalize="none"
-        keyboardType={kbt}
-        placeholderTextColor={error ? 'red' : '#aaa'}
-        placeholder={placeholder}
-        style={[ Styles.input(error), extInputStyles ]}
-        onChangeText={onChangeText}
-        value={value}
-        editable={!loading}
-      />
-      {error && <Text style={{ color: 'red' }}>{error}</Text>}
-    </View>
-  );
-};
+const Input = React.forwardRef((props, ref) => (
+  <View style={Styles.inputContainer}>
+    {props.title && <Text style={{ fontSize: RFValue(12), textTransform: 'capitalize' }}>{props.title}</Text>}
+    <TextInput
+      ref={ref}
+      onSubmitEditing={props.onSubmitEditing}
+      autoCompleteType="off"
+      autoCapitalize="none"
+      keyboardType={props.kbt}
+      placeholderTextColor={props.error ? 'red' : '#aaa'}
+      placeholder={props.placeholder}
+      style={[ Styles.input(props.error), props.extInputStyles ]}
+      onChangeText={props.onChangeText}
+      value={props.value}
+      editable={!props.loading}
+    />
+    {props.error && <Text style={{ color: 'red' }}>{props.error}</Text>}
+  </View>
+));
 
 export default Input;

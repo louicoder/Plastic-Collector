@@ -15,8 +15,9 @@ const PackagePreview = ({ index, rightIcon = true, rightIconPress, extStyles, ..
         alignItems: 'center',
         paddingHorizontal: RFValue(10),
         backgroundColor: '#d8f3dc',
-        marginBottom: RFValue(10),
-        height: RFValue(60),
+        // backgroundColor: '#eeeeee70',
+        marginBottom: RFValue(5),
+        height: RFValue(50),
         ...extStyles
       }}
     >
@@ -51,11 +52,14 @@ const PackagePreview = ({ index, rightIcon = true, rightIconPress, extStyles, ..
       {rightIcon && (
         <Pressable
           onPress={() =>
-            rightIconPress() ||
-            dispatch.Collections.setPayload({
-              ...payload,
-              typesBreakdown: payload.typesBreakdown && [ ...payload.typesBreakdown.filter((x) => x.id !== pckg.id) ]
-            })}
+            rightIconPress
+              ? rightIconPress()
+              : dispatch.Collections.setPayload({
+                  ...payload,
+                  typesBreakdown: payload.typesBreakdown && [
+                    ...payload.typesBreakdown.filter((x) => x.id !== pckg.id)
+                  ]
+                })}
         >
           <DesignIcon name="close" />
         </Pressable>

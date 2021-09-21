@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import MaskInput from 'react-native-mask-input';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -11,19 +11,26 @@ const RegDropper = ({ setAdddrop }) => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.loading.effects.Droppers);
   const { activeDropper } = useSelector((state) => state.Droppers);
+  const { user } = useSelector((state) => state.Account);
+
   const [ state, setState ] = React.useState({
     name: 'Namusoke Joweria',
     phoneNumber: '0755111111',
     gender: 'female'
   });
-  const { user } = useSelector((state) => state.Account);
 
   const registerDropper = () => {
-    // const {} = state;
+    const { name } = state;
+    if (!name) return Alert.alert('Missing information', 'Dropper name is required to register them, try again');
+    if (!gender) return Alert.alert('Missing information', 'Dropper gender is required to register them, try again');
     dispatch.Droppers.registerDropper({
-      payload: { ...state, attendantId: user._id, district: user.district },
+      payload: {
+        ...state,
+        attendantId: user._id,
+        district: user.district,
+        phoneNumber: state.phoneNumber.replace('-', '')
+      },
       callback: ({ success, result }) => {
-        // console.log('REgistering dropper', res);
         if (!success) return Alert.alert('Something went wrong', result);
         setState({});
         return setAdddrop();
@@ -31,14 +38,9 @@ const RegDropper = ({ setAdddrop }) => {
     });
   };
 
-  console.log('Active Dropper', activeDropper);
-
   return (
     <KeyboardAwareScrollView style={{ flex: 1 }}>
       <View style={{ flex: 1, paddingTop: RFValue(50) }}>
-        {/* <Text style={{ marginVertical: RFValue(15), fontSize: RFValue(18), fontWeight: 'bold' }}>
-          Register new dropper:
-        </Text> */}
         <Text style={{ marginVertical: RFValue(15), fontSize: RFValue(14), fontFamily: 'OpenSans-Regular' }}>
           Enter the information below about the dropper to start collecting their packages.
         </Text>

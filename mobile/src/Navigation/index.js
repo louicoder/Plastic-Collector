@@ -43,7 +43,21 @@ const HomeScreens = () => (
       name="HomeScreen"
       component={Home}
       options={{
-        header: (props) => <Header {...props} showback={false} title="Home screen" />,
+        header: (props) => (
+          <Header
+            {...props}
+            showback={false}
+            title="All Collections"
+            leftIcons={[
+              {
+                name: 'swap',
+                onPress: () => props.route.params.openFilterModal(),
+                extStyles: { transform: [ { rotate: '90deg' } ] }
+              }
+              // { name: 'adduser', onPress: () => null }
+            ]}
+          />
+        ),
         cardStyle: { backgroundColor: '#fff' }
       }}
     />
@@ -83,7 +97,7 @@ const FilterScreens = () => (
             {...props}
             showback={false}
             // leftIcons={[ { name: 'plus', onPress: () => null }, { name: 'deleteuser', onPress: () => null } ]}
-            title="All Collections"
+            title="District Collections"
           />
         ),
         cardStyle: { backgroundColor: '#fff' }

@@ -11,6 +11,8 @@ const DropperPreview = ({
   dateCreated,
   gender,
   name,
+  phoneNumber,
+  showDropperContact = false,
   district,
   closeModal,
   loading = false,
@@ -32,6 +34,7 @@ const DropperPreview = ({
       <View style={{ height: RFValue(15), borderRadius: 20, backgroundColor: '#eee', width: RFValue(250) }} />
     </View>
   );
+
   return (
     <Pressable
       style={{
@@ -62,9 +65,10 @@ const DropperPreview = ({
           <Loading />
         ) : (
           <View>
-            <Text style={{ fontSize: RFValue(14), fontFamily: 'OpenSans-bold' }}>{name}</Text>
+            <Text style={{ fontSize: RFValue(15), fontFamily: 'OpenSans-bold' }}>{name}</Text>
+            {/* <Text style={{ fontSize: RFValue(12), fontFamily: 'OpenSans-bold' }}>Mobile - {phoneNumber}</Text> */}
             <Text style={{ fontSize: RFValue(12), color: '#aaa', fontFamily: 'OpenSans-Regular' }}>
-              {gender}・{moment(dateCreated).fromNow()}・{district}
+              {gender}・{district} {showDropperContact ? `・${phoneNumber}` : null}
             </Text>
           </View>
         )}

@@ -23,3 +23,20 @@ export const MEASUREMENTS = [
   { label: '1.5 litres', value: '1.5litres' },
   { label: '2 litres', value: '2litres' }
 ];
+
+export const DISTRICTS = [
+  'kawempe division',
+  'makinkye division',
+  'nakawa division',
+  'Kampala central division',
+  'Rubaga division',
+  'wakiso district',
+  'mpigi district',
+  'mbarara city',
+  'Hoima city',
+  'masaka city',
+  'gulu city',
+  'jinja city',
+  'mbale city',
+  'fortportal city'
+];

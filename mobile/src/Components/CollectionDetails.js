@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { DropperPreview, PackagePreview } from '.';
 
-const CollectionDetails = ({ dropperId }) => {
+const CollectionDetails = ({ dropperId, showDropperContact }) => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.loading.effects.Account);
   const { dropper } = useSelector((state) => state.Account);
@@ -32,14 +32,23 @@ const CollectionDetails = ({ dropperId }) => {
 
   return (
     <View>
-      <Text style={{ fontFamily: 'OpenSans-Bold', fontSize: RFValue(14), marginBottom: RFValue(10), color: '#aaa' }}>
-        User details
-      </Text>
-      <DropperPreview leftIcon={false} {...dropper} loading={loading.getDropperAccount} />
+      <View style={{ paddingHorizontal: RFValue(10) }}>
+        <Text
+          style={{ fontFamily: 'OpenSans-Bold', fontSize: RFValue(14), marginVertical: RFValue(10), color: '#aaa' }}
+        >
+          User details
+        </Text>
+        <DropperPreview
+          leftIcon={false}
+          {...dropper}
+          loading={loading.getDropperAccount}
+          showDropperContact={showDropperContact}
+        />
 
-      <Text style={{ fontFamily: 'OpenSans-Bold', fontSize: RFValue(14), marginBottom: RFValue(10), color: '#aaa' }}>
-        Packages in this collection:
-      </Text>
+        <Text style={{ fontFamily: 'OpenSans-Bold', fontSize: RFValue(14), marginBottom: RFValue(10), color: '#aaa' }}>
+          Packages in this collection:
+        </Text>
+      </View>
       <FlatList
         keyExtractor={(item) => item._id}
         data={activeCollection.typesBreakdown}

@@ -5,7 +5,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { height } = Dimensions.get('window');
-const BottomSheet = ({ isVisible, closeModal, children }) => {
+const BottomSheet = ({ isVisible, closeModal, children, padded = true }) => {
   return (
     <Modal
       isVisible={isVisible}
@@ -25,7 +25,7 @@ const BottomSheet = ({ isVisible, closeModal, children }) => {
           backgroundColor: '#fff',
           bottom: 0,
           width: '100%',
-          padding: RFValue(10),
+          padding: RFValue(padded ? 10 : 0),
           paddingBottom: useSafeAreaInsets().bottom,
           maxHeight: 0.9 * height
         }}

@@ -72,7 +72,7 @@ export default {
     async getAttendantStatistics ({ attendantId, callback }, state) {
       try {
         await AXIOS('account').get(`/statistics/${attendantId}`).then(({ data }) => {
-          console.log('stats---', data);
+          console.log('stats---', data, attendantId);
           if (data.success) dispatch.Account.setStatistics(data.result);
           return callback(data);
         });

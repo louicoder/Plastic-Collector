@@ -154,7 +154,7 @@ const AddCollection = ({ setStatex, registerDrop, setQty, showDroppers, changeMa
           <View
             style={{
               height: '95%',
-              backgroundColor: '#eee',
+              backgroundColor: '#eeeeee80',
               width: '100%',
               alignItems: 'center',
               justifyContent: 'center'

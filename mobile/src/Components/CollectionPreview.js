@@ -5,8 +5,18 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import { DesignIcon } from '.';
 
-const CollectionPreview = ({ onPress, totalweight, totalCollection, dateCreated, typesBreakdown, ...rest }) => {
-  const caption = typesBreakdown.reduce((p, c) => [ ...p, `${c.company} - ${c.measurement} - ${c.total}` ], []);
+const CollectionPreview = ({
+  onPress,
+  totalweight,
+  totalCollection,
+  dateCreated,
+  typesBreakdown,
+  extStyles,
+  ...rest
+}) => {
+  const caption =
+    typesBreakdown && typesBreakdown.reduce((p, c) => [ ...p, `${c.company} - ${c.measurement} - ${c.total}` ], []);
+
   return (
     <Pressable
       onPress={onPress}
@@ -18,9 +28,10 @@ const CollectionPreview = ({ onPress, totalweight, totalCollection, dateCreated,
         // borderWidth: 1,
         // borderColor: '#eee',
         padding: RFValue(10),
-        // justifyContent: 'space-between',
+        justifyContent: 'space-between',
         backgroundColor: '#eeeeee90',
-        marginBottom: RFValue(10)
+        marginBottom: RFValue(5),
+        ...extStyles
       }}
     >
       <View
@@ -31,19 +42,22 @@ const CollectionPreview = ({ onPress, totalweight, totalCollection, dateCreated,
           backgroundColor: '#bbdefb',
           alignItems: 'center',
           justifyContent: 'center',
-          marginRight: RFValue(10)
+          marginRight: RFValue(10),
+          alignSelf: 'flex-start'
         }}
       >
         <Ionicon name="archive-outline" size={RFValue(25)} color="#000" />
       </View>
-      <View style={{ flexWrap: 'wrap', width: '77%' }}>
+      <View style={{ width: '70%' }}>
         <Text style={{ fontFamily: 'OpenSans-Bold', fontSize: RFValue(16) }}>
           {totalweight} kgs ・ {totalCollection} bottles
         </Text>
         <View style={{ width: '100%' }}>
-          <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(14) }}>{caption.join(', ')}</Text>
+          <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(12), color: 'green' }}>
+            {caption && caption.join(', ')}
+          </Text>
         </View>
-        <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(12), color: '#aaa' }}>
+        <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(10), color: '#aaa' }}>
           {moment(dateCreated).fromNow()}
         </Text>
       </View>

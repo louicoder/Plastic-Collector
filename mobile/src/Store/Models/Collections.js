@@ -8,7 +8,10 @@ export default {
     attendantCollections: [],
     dropperCollections: [],
     payload: { typesBreakdown: [], total: '', measurement: '', company: '', totalweight: '' },
-    activeCollection: {}
+    activeCollection: {},
+    // homeCollections: [],
+    homeDroppersList: [],
+    activeDistrict: ''
   },
 
   //  Reducers :::
@@ -16,7 +19,7 @@ export default {
     setColletions (state, collections) {
       return { ...state, collections };
     },
-    setDistrictColletions (state, districtCollections) {
+    setDistrictCollections (state, districtCollections) {
       return { ...state, districtCollections };
     },
     setAttendantCollections (state, attendantCollections) {
@@ -30,6 +33,9 @@ export default {
     },
     setActiveCollection (state, activeCollection) {
       return { ...state, activeCollection };
+    },
+    setActiveDistrict (state, activeDistrict) {
+      return { ...state, activeDistrict };
     }
   },
 
@@ -66,7 +72,7 @@ export default {
         await AXIOS('collections').get(`/all?page=${page}&limit=${limit}`).then(({ data }) => {
           if (data.success)
             dispatch.Collections.setColletions(
-              page > 1 ? [ ...state.Collections.collections, data.result ] : data.result
+              page > 1 ? [ ...state.Collections.collections, ...data.result ] : data.result
             );
           return callback(data);
         });
@@ -79,9 +85,10 @@ export default {
     async getDistrictCollections ({ callback, district, page, limit }, state) {
       try {
         await AXIOS('collections').get(`/district/${district}?page=${page}&limit=${limit}`).then(({ data }) => {
+          // console.log('Result', page, data);
           if (data.success)
-            dispatch.Collections.setDistrictColletions(
-              page > 1 ? [ ...state.Collections.districtCollections, data.result ] : data.result
+            dispatch.Collections.setDistrictCollections(
+              page > 1 ? [ ...state.Collections.districtCollections, ...data.result ] : data.result
             );
           return callback(data);
         });

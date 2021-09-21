@@ -8,6 +8,7 @@ import DropperPreview from './DropperPreview';
 import CollectionPreview from './CollectionPreview';
 import PackagePreview from './PackagePreview';
 import DropperSkeleton from './DropperSkeleton';
+import DistrictList from './DistrictList';
 
 export {
   Header,
@@ -19,5 +20,6 @@ export {
   DropperPreview,
   CollectionPreview,
   PackagePreview,
-  DropperSkeleton
+  DropperSkeleton,
+  DistrictList
 };

@@ -34,7 +34,7 @@ const Header = ({ title, onBackPress, leftIcons, showback = true, extStyles, nav
       </View>
 
       <View style={{ flexGrow: 1, borderColor: 'red', ...titleStyles }}>
-        {title && <Text style={{ fontSize: RFValue(22), fontFamily: 'OpenSans-Bold' }}>{title}</Text>}
+        {title && <Text style={{ fontSize: RFValue(20), fontFamily: 'OpenSans-Bold' }}>{title}</Text>}
       </View>
 
       <View style={{ flexDirection: 'row', height: RFValue(50), alignItems: 'center' }}>
@@ -43,8 +43,8 @@ const Header = ({ title, onBackPress, leftIcons, showback = true, extStyles, nav
           leftIcons.map((props, index) => (
             <DesignIcon
               key={KEY()}
-              {...props}
               extStyles={{ marginLeft: leftIcons.length !== index + 1 ? 0 : RFValue(15) }}
+              {...props}
             />
           ))}
       </View>
