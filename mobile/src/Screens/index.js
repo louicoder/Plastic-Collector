@@ -6,5 +6,6 @@ import Login from './Login';
 import Register from './Register';
 import AddColleciton from './AddColleciton';
 import Splash from './Splash';
+import DistrictCollections from './DistrictCollections';
 
-export { Home, Account, About, Filter, Login, Register, AddColleciton, Splash };
+export { Home, Account, About, Filter, Login, Register, AddColleciton, Splash, DistrictCollections };

@@ -131,7 +131,12 @@ const Home = ({ navigation }) => {
               <DesignIcon name="close" color="#000" />
             </Pressable>
           </View>
-          <DistrictList onPress={() => setState({ ...state, isVisible: false })} />
+          <DistrictList
+            onPress={(district) => {
+              setState({ ...state, isVisible: false });
+              navigation.navigate('District', { screen: 'DistrictCollections', params: { district } });
+            }}
+          />
         </View>
       </BottomSheet>
 

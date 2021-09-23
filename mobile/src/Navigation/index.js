@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home, Filter, About, Account, Login, Register, AddColleciton, Splash } from '../Screens';
+import { Home, Filter, About, Account, Login, Register, AddColleciton, Splash, DistrictCollections } from '../Screens';
 import { DesignIcon, Header } from '../Components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -16,6 +16,7 @@ const AddStack = createStackNavigator();
 const LoginStack = createStackNavigator();
 const RegisterStack = createStackNavigator();
 const AllStacks = createStackNavigator();
+const DistrictStacks = createStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
 // Registration screens
@@ -27,6 +28,20 @@ const RegisterScreens = () => (
       options={{ header: (props) => <Header title="Registration" {...props} /> }}
     />
   </RegisterStack.Navigator>
+);
+
+// Registration screens
+const DistrictScreens = () => (
+  <DistrictStacks.Navigator screenOptions={{ headerMode: 'screen', header: () => null }}>
+    <DistrictStacks.Screen
+      name="DistrictCollections"
+      component={DistrictCollections}
+      options={{
+        header: (props) => <Header title="District Collections" {...props} />,
+        cardStyle: { backgroundColor: '#fff' }
+      }}
+    />
+  </DistrictStacks.Navigator>
 );
 
 // Login screens
@@ -61,6 +76,7 @@ const HomeScreens = () => (
         cardStyle: { backgroundColor: '#fff' }
       }}
     />
+    <HomeStack.Screen name="District" component={DistrictScreens} options={{ header: (props) => null }} />
   </HomeStack.Navigator>
 );
 

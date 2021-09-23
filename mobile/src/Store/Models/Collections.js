@@ -9,7 +9,7 @@ export default {
     dropperCollections: [],
     payload: { typesBreakdown: [], total: '', measurement: '', company: '', totalweight: '' },
     activeCollection: {},
-    homeFilteredCollections: [],
+    districtFilteredCollections: [],
     homeDroppersList: [],
     activeDistrict: ''
   },
@@ -19,8 +19,8 @@ export default {
     setColletions (state, collections) {
       return { ...state, collections };
     },
-    setFilteredCollections (state, homeFilteredCollections) {
-      return { ...state, homeFilteredCollections };
+    setDistrictFilteredCollections (state, districtFilteredCollections) {
+      return { ...state, districtFilteredCollections };
     },
     setDistrictCollections (state, districtCollections) {
       return { ...state, districtCollections };
@@ -85,13 +85,13 @@ export default {
     },
 
     // GEt all collections, paginated :::
-    async getHomeCollectionsFiltered ({ callback, page, limit, district }, state) {
+    async getDistrictFilteredCollections ({ callback, page, limit, district }, state) {
       try {
         await AXIOS('collections').get(`/district/${district}?page=${page}&limit=${limit}`).then(({ data }) => {
           console.log('DISSSSSS', district, data);
           if (data.success)
-            dispatch.Collections.setFilteredCollections(
-              page > 1 ? [ ...state.Collections.homeFilteredCollections, ...data.result ] : data.result
+            dispatch.Collections.setDistrictFilteredCollections(
+              page > 1 ? [ ...state.Collections.districtFilteredCollections, ...data.result ] : data.result
             );
           return callback(data);
         });
