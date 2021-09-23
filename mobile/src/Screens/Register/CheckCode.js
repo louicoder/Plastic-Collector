@@ -13,7 +13,6 @@ const CheckCode = ({ code, setCode, setReg }) => {
     dispatch.Account.verifyCode({
       code,
       callback: ({ success, result }) => {
-        console.log('Result from verifying', result);
         if (!success) return Alert.alert('Something went wrong', result);
         else setReg();
       }

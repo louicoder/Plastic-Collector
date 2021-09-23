@@ -88,7 +88,6 @@ export default {
     async getDistrictFilteredCollections ({ callback, page, limit, district }, state) {
       try {
         await AXIOS('collections').get(`/district/${district}?page=${page}&limit=${limit}`).then(({ data }) => {
-          console.log('DISSSSSS', district, data);
           if (data.success)
             dispatch.Collections.setDistrictFilteredCollections(
               page > 1 ? [ ...state.Collections.districtFilteredCollections, ...data.result ] : data.result

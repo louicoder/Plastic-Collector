@@ -37,7 +37,6 @@ const AddCollection = ({ setStatex, registerDrop, setQty, showDroppers, changeMa
     dispatch.Collections.createCollection({
       payload: {},
       callback: (res) => {
-        console.log('After regisering collection', res);
         if (!res.success) return alert(res.result);
         // setState({});
       }

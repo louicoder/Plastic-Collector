@@ -17,7 +17,6 @@ const Login = ({ navigation: { navigate } }) => {
       payload: state,
       callback: (res) => {
         if (!res.success) return alert(res.result);
-        console.log('Result login', res);
         setState({});
         navigate('Main', { screen: 'Home' });
       }

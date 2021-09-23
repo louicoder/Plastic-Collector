@@ -15,8 +15,6 @@ const Spalsh = ({ navigation }) => {
 
   const checUserLoggedin = async () => {
     await getAsyncStorage('user', ({ success, result }) => {
-      console.log('USER--->Splash---->', result);
-
       if (!success) return navigation.navigate('Login');
       dispatch.Account.setUser(result);
       return navigation.navigate('Main', { screen: 'Home' });

@@ -38,7 +38,6 @@ export default {
     async verifyCode ({ code, callback }, state) {
       try {
         await AXIOS('codes').get(`/verify/${code}`).then(({ data }) => {
-          console.log('Verify, payload', data);
           // if (data.success) dispatch.Account.setRegCode(code);
           return callback(data);
         });
@@ -89,16 +88,10 @@ export default {
     // GEt attendant account.
     async getAttendantStatistics ({ attendantId, callback }, state) {
       try {
-        await AXIOS('account')
-          .get(`/statistics/${attendantId}`, {
-            onDownloadProgress: (event) => console.log('Downprogress >>>>', event.loaded * 100 / event.total),
-            onUploadProgress: (event) => console.log('Upprogress >>>>', event.loaded * 100 / event.total)
-          })
-          .then(({ data }) => {
-            console.log('stats---', data, attendantId);
-            if (data.success) dispatch.Account.setStatistics(data.result);
-            return callback(data);
-          });
+        await AXIOS('account').get(`/statistics/${attendantId}`).then(({ data }) => {
+          if (data.success) dispatch.Account.setStatistics(data.result);
+          return callback(data);
+        });
       } catch (error) {
         return callback({ success: false, result: error });
       }

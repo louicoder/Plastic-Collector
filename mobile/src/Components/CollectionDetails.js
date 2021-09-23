@@ -12,7 +12,6 @@ const CollectionDetails = ({ dropperId, showDropperContact }) => {
   const { activeCollection } = useSelector((state) => state.Collections);
   const navigation = useNavigation();
 
-  console.log('ACtivecoll', activeCollection.typesBreakdown.length);
   React.useEffect(
     () => {
       getDropperAccount();
@@ -25,7 +24,6 @@ const CollectionDetails = ({ dropperId, showDropperContact }) => {
       dropperId,
       callback: ({ result, success }) => {
         if (!success) return Alert.alert('Something went wrong', result);
-        console.log('result dropper', result);
       }
     });
   };
