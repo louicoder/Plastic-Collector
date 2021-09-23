@@ -1,3 +1,4 @@
+const { DISTRICTS, CODES_LIST } = require('../Constants');
 const {
   ErrorHandler,
   MissingField,
@@ -8,23 +9,36 @@ const {
   paginateHelper,
   getDateString
 } = require('../Helpers');
-const { account: AM, collection: COLL, dropper: DR } = require('../models');
+const { account: AM, collection: COLL, dropper: DR, regcodes: RC } = require('../models');
 
 const register = async (req, res) => {
+  if (!req.body.code) return MissingField(res, 'Registration code');
   if (!req.body.phoneNumber) return MissingField(res, 'Phone number');
   if (!req.body.name) return MissingField(res, 'Name');
   if (!req.body.password) return MissingField(res, 'Password');
   if (!req.body.gender) return MissingField(res, 'Gender');
+  if (req.body.phoneNumber.length !== 10)
+    return res.json({ success: false, result: 'Phone number should be 10 characters long' });
   if (!req.body.gender === 'male' || !req.body.gender === 'female')
     return res.json({ success: 'false', result: 'wrong gender passed, it should either be male or female' });
   if (!req.body.district) return MissingField(res, 'District');
+  if (!DISTRICTS.includes(req.body.district))
+    return res.json({
+      success: false,
+      result: `The drop point entered is not a valid point, make sure it is one of ${DISTRICTS.join(',')}`
+    });
   try {
-    const { password: pass, ...rest } = req.body;
+    const { password: pass, code, ...rest } = req.body;
+    if (!CODES_LIST.includes(code))
+      return res.json({ success: false, result: 'The code used is not valid, please use a valid registration code' });
     const password = hashPassword(pass);
     const Acc = new AM({ ...rest, password, dateCreated: getDateString() });
-    await Acc.save().then((user) => {
-      const token = createToken(user);
-      return SuccessHandler(res, { user, token });
+    await Acc.save().then(async (user) => {
+      const codeSave = new RC({ code, userId: user._id });
+      await codeSave.save().then(() => {
+        const token = createToken(user);
+        return SuccessHandler(res, { user, token });
+      });
     });
   } catch (error) {
     console.log('Errror', error.keyValue);
@@ -87,7 +101,6 @@ const getAccount = async (req, res) => {
 
 const getAttendantStatistics = async (req, res) => {
   if (!req.params.uid) return MissingField(res, 'Account Type');
-  // if()
 
   const { uid: attendantId } = req.params;
   try {

@@ -13,11 +13,9 @@ const PackagePreview = ({ index, rightIcon = true, rightIconPress, extStyles, ..
       style={{
         flexDirection: 'row',
         alignItems: 'center',
-        paddingHorizontal: RFValue(10),
+        padding: RFValue(10),
         backgroundColor: '#d8f3dc',
-        // backgroundColor: '#eeeeee70',
         marginBottom: RFValue(5),
-        height: RFValue(50),
         ...extStyles
       }}
     >

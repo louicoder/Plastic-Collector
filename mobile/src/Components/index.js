@@ -10,6 +10,7 @@ import PackagePreview from './PackagePreview';
 import DropperSkeleton from './DropperSkeleton';
 import DistrictList from './DistrictList';
 import SelectField from './SelectField';
+import GenderSelector from './GenderSelector';
 import Logo from './Logo';
 
 export {
@@ -25,5 +26,6 @@ export {
   DropperSkeleton,
   DistrictList,
   SelectField,
+  GenderSelector,
   Logo
 };

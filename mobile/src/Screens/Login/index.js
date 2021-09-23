@@ -8,7 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Login = ({ navigation: { navigate } }) => {
   const dispatch = useDispatch();
-  const [ state, setState ] = React.useState({ phoneNumber: '0782131415', password: 'password', passVisible: false });
+  const [ state, setState ] = React.useState({ phoneNumber: '', password: '', passVisible: false });
   const loading = useSelector((state) => state.loading.effects.Account);
 
   // login into attendant account
@@ -51,17 +51,19 @@ const Login = ({ navigation: { navigate } }) => {
           width: '100%',
           paddingHorizontal: RFValue(10),
           fontSize: RFValue(14),
-          marginBottom: RFValue(5)
+          marginBottom: RFValue(5),
+          fontFamily: 'OpenSans-Regular'
         }}
         value={state.phoneNumber}
-        placeholder="07xx-xxx-xxx"
+        placeholder="Enter phone number e.g 07xx-xxx-xxx"
+        placeholderTextColor="#aaa"
         maxLength={12}
-        onChangeText={(masked, unmasked, obfuscated) => setState({ ...state, phoneNumber: masked })}
+        onChangeText={(masked, unmasked, obfuscated) => setState({ ...state, phoneNumber: unmasked })}
         mask={[ /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/ ]}
       />
 
       <Password
-        placeholder="Password"
+        placeholder="Enter your Password"
         onChangeText={(password) => setState({ ...state, password })}
         value={state.password}
         passVisible={state.passVisible}

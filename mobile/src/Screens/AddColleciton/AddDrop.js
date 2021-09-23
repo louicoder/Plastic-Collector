@@ -98,6 +98,7 @@ const AddCollection = ({ setStatex, registerDrop, setQty, showDroppers, changeMa
           }
         ].map(({ onPress, title, value, noCaps, caption, modalTitle }) => (
           <Pressable
+            key={Math.random().toString(36).slice(2)}
             onPress={onPress}
             style={{
               width: '49%',
@@ -148,7 +149,9 @@ const AddCollection = ({ setStatex, registerDrop, setQty, showDroppers, changeMa
       <View style={{ flexShrink: 1 }}>
         {payload.typesBreakdown && payload.typesBreakdown.length ? (
           <ScrollView style={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
-            {payload.typesBreakdown.map((item, index) => <PackagePreview index={index} {...item} />)}
+            {payload.typesBreakdown.map((item, index) => (
+              <PackagePreview key={Math.random().toString(36).slice(2)} index={index} {...item} />
+            ))}
           </ScrollView>
         ) : (
           <View

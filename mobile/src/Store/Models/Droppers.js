@@ -27,7 +27,6 @@ export default {
           }
           return callback(data);
         });
-        return callback({ success: true });
       } catch (error) {
         return callback({ success: false, result: error });
       }
@@ -49,7 +48,6 @@ export default {
     async getAttendantDroppers ({ attendantId, callback, page, limit }, state) {
       try {
         await AXIOS('dropper').get(`/attendant/${attendantId}?page=${page}&limit=${limit}`).then(({ data }) => {
-          console.log('ATEdant dropers', data.result);
           if (data.success) dispatch.Droppers.setAttendantDroppers(data.result);
           return callback(data);
         });

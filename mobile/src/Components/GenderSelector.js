@@ -21,12 +21,11 @@ const GenderSelector = ({ activeGender, setActiveGender }) => {
             key={index + Math.random().toString().slice(2)}
             onPress={() => (sameGender ? setActiveGender('') : setActiveGender(gender))}
             style={{
-              backgroundColor: '#eee',
+              backgroundColor: '#89c2d980',
               width: '49%',
               height: RFValue(40),
               marginBottom: RFValue(10),
               paddingHorizontal: RFValue(10),
-              // justifyContent: 'center',
               flexDirection: 'row',
               alignItems: 'center'
             }}

@@ -53,31 +53,31 @@ const AddCollection = ({ navigation }) => {
     });
   }, []);
 
-  // Register Dropper
-  const registerDropper = () => {
-    const { name, gender, phoneNumber } = dropper;
-    const { district, _id: attendantId } = user;
-    const payload = { name, gender, phoneNumber, district, attendantId };
-    dispatch.Droppers.registerDropper({
-      payload,
-      callback: ({ success, result }) => {
-        if (!success) return Alert.alert('Something went wrong', result);
-        setState({ ...state, activeDropper: result, mainComp: 'adddrop' });
-      }
-    });
-  };
+  // // Register Dropper
+  // const registerDropper = () => {
+  //   const { name, gender, phoneNumber } = dropper;
+  //   const { district, _id: attendantId } = user;
+  //   const payload = { name, gender, phoneNumber, district, attendantId };
+  //   dispatch.Droppers.registerDropper({
+  //     payload,
+  //     callback: ({ success, result }) => {
+  //       if (!success) return Alert.alert('Something went wrong', result);
+  //       setState({ ...state, activeDropper: result, mainComp: 'adddrop' });
+  //     }
+  //   });
+  // };
 
-  // Create Collection:
-  const createCollection = () => {
-    dispatch.Collections.createCollection({
-      payload: collection,
-      callback: (res) => {
-        console.log('After regisering collection', res);
-        if (!res.success) return alert(res.result);
-        // setState({});
-      }
-    });
-  };
+  // // Create Collection:
+  // const createCollection = () => {
+  //   dispatch.Collections.createCollection({
+  //     payload: collection,
+  //     callback: (res) => {
+  //       console.log('After regisering collection', res);
+  //       if (!res.success) return alert(res.result);
+  //       // setState({});
+  //     }
+  //   });
+  // };
 
   const RenderModalContent = ({ comp, closeModal, setCompany, setMeasurement, createDropper }) => {
     switch (comp) {

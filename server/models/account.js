@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { DISTRICTS } = require('../Constants');
 
 const account = new mongoose.Schema({
   name: { type: String, required: true },
@@ -7,7 +8,7 @@ const account = new mongoose.Schema({
   email: { type: String, lowercase: true, trim: true, default: '' },
   gender: { type: String, enum: [ 'male', 'female' ] },
   imageUrl: { type: String, default: '' },
-  district: { type: String, default: '', lowercase: true, trim: true },
+  district: { type: String, default: '', lowercase: true, trim: true, enum: DISTRICTS, required: true },
   dateCreated: String
 });
 

@@ -9,7 +9,7 @@ export default {
     dropperCollections: [],
     payload: { typesBreakdown: [], total: '', measurement: '', company: '', totalweight: '' },
     activeCollection: {},
-    // homeCollections: [],
+    homeFilteredCollections: [],
     homeDroppersList: [],
     activeDistrict: ''
   },
@@ -18,6 +18,9 @@ export default {
   reducers: {
     setColletions (state, collections) {
       return { ...state, collections };
+    },
+    setFilteredCollections (state, homeFilteredCollections) {
+      return { ...state, homeFilteredCollections };
     },
     setDistrictCollections (state, districtCollections) {
       return { ...state, districtCollections };
@@ -67,12 +70,28 @@ export default {
     },
 
     // GEt all collections, paginated :::
-    async getAllCollections ({ callback, page, limit }, state) {
+    async getAllCollections ({ callback, page, limit, url }, state) {
       try {
         await AXIOS('collections').get(`/all?page=${page}&limit=${limit}`).then(({ data }) => {
           if (data.success)
             dispatch.Collections.setColletions(
               page > 1 ? [ ...state.Collections.collections, ...data.result ] : data.result
+            );
+          return callback(data);
+        });
+      } catch (error) {
+        return callback({ success: false, result: error });
+      }
+    },
+
+    // GEt all collections, paginated :::
+    async getHomeCollectionsFiltered ({ callback, page, limit, district }, state) {
+      try {
+        await AXIOS('collections').get(`/district/${district}?page=${page}&limit=${limit}`).then(({ data }) => {
+          console.log('DISSSSSS', district, data);
+          if (data.success)
+            dispatch.Collections.setFilteredCollections(
+              page > 1 ? [ ...state.Collections.homeFilteredCollections, ...data.result ] : data.result
             );
           return callback(data);
         });

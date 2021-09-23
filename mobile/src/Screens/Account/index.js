@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Alert } from 'react-native';
+import { View, Text, Alert, ScrollView } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useDispatch, useSelector } from 'react-redux';
 import Profile from './Profile';
@@ -11,9 +11,11 @@ const Account = ({ navigation }) => {
   const [ state, setState ] = React.useState({ nextPage: 1, limit: 10 });
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex: 1, backgroundColor: '#eee' }}>
       {user.name ? (
-        <Profile />
+        <ScrollView style={{ flexGrow: 1 }}>
+          <Profile />
+        </ScrollView>
       ) : (
         <View>
           <Text>Login to continue</Text>

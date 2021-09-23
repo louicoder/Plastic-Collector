@@ -8,6 +8,7 @@ const Input = React.forwardRef((props, ref) => (
   <View style={Styles.inputContainer}>
     {props.title && <Text style={{ fontSize: RFValue(12), textTransform: 'capitalize' }}>{props.title}</Text>}
     <TextInput
+      {...props}
       ref={ref}
       onSubmitEditing={props.onSubmitEditing}
       autoCompleteType="off"

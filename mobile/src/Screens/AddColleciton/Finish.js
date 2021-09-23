@@ -42,6 +42,7 @@ const Finish = ({ showDroppers, changeMainComp }) => {
       payload: payloadx,
       callback: ({ result, success }) => {
         if (!success) return Alert.alert('Someting went wrong', result);
+        dispatch.Droppers.setActiveDropper(activeDropper);
         changeMainComp('adddrop');
       }
     });
@@ -49,8 +50,14 @@ const Finish = ({ showDroppers, changeMainComp }) => {
   // console.log(user.district);
   return (
     <View style={{ flex: 1 }}>
+      <Text style={{ marginVertical: RFValue(10), fontFamily: 'OpenSans-Bold', fontSize: RFValue(14) }}>
+        Dropper details:
+      </Text>
+      <View>
+        <ActiveDropper showDroppers={showDroppers} />
+      </View>
       <Text style={{ marginVertical: RFValue(10), fontFamily: 'OpenSans-Regular', fontSize: RFValue(14) }}>
-        Enter the total weight of all the pkgs below in kilograms:
+        Total weight of all packages in kilograms:
       </Text>
       <Input
         placeholder="Enter total weight of collection"
@@ -59,15 +66,8 @@ const Finish = ({ showDroppers, changeMainComp }) => {
         onChangeText={(totalweight) => dispatch.Collections.setPayload({ ...payload, totalweight })}
       />
 
-      <Text style={{ marginBottom: RFValue(10), fontFamily: 'OpenSans-Bold', fontSize: RFValue(14) }}>
-        Dropper details:
-      </Text>
-      <View>
-        <ActiveDropper showDroppers={showDroppers} />
-      </View>
-
-      <View style={{ padding: RFValue(10), backgroundColor: '#fff', marginVertical: RFValue(15) }}>
-        <Text style={{ fontFamily: 'OpenSans-Bold', fontSize: RFValue(18) }}>
+      <View style={{ padding: RFValue(10), backgroundColor: '#fff', marginVertical: RFValue(10) }}>
+        <Text style={{ fontFamily: 'OpenSans-Italic', fontSize: RFValue(20) }}>
           {totalCollection} - bottles collected
         </Text>
       </View>

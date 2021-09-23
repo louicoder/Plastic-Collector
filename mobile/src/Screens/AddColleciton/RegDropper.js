@@ -14,13 +14,13 @@ const RegDropper = ({ setAdddrop }) => {
   const { user } = useSelector((state) => state.Account);
 
   const [ state, setState ] = React.useState({
-    name: 'Namusoke Joweria',
-    phoneNumber: '0755111111',
-    gender: 'female'
+    name: '',
+    phoneNumber: '',
+    gender: ''
   });
 
   const registerDropper = () => {
-    const { name } = state;
+    const { name, gender } = state;
     if (!name) return Alert.alert('Missing information', 'Dropper name is required to register them, try again');
     if (!gender) return Alert.alert('Missing information', 'Dropper gender is required to register them, try again');
     dispatch.Droppers.registerDropper({
@@ -59,9 +59,7 @@ const RegDropper = ({ setAdddrop }) => {
             marginBottom: RFValue(10)
           }}
         >
-          <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(14), color: '#aaa' }}>
-            {user.district} district
-          </Text>
+          <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(14), color: '#aaa' }}>{user.district}</Text>
         </View>
 
         <MaskInput

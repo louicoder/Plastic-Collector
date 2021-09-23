@@ -45,8 +45,6 @@ const Profile = () => {
     });
   };
 
-  // React.useEffect(() => {}, [ statistics ]);
-
   return (
     <View style={{ flex: 1, backgroundColor: '#eeeeee70', width: '100%' }}>
       <View
@@ -74,10 +72,44 @@ const Profile = () => {
         <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(16), color: '#000' }}>{user.phoneNumber}</Text>
       </View>
 
+      <View
+        style={{
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          marginVertical: RFValue(10),
+          justifyContent: 'space-between'
+        }}
+      >
+        {[
+          { title: 'Total Collections', stat: statistics.collections && statistics.collections.length },
+          { title: 'Total Droppers', stat: statistics.droppers && statistics.droppers.length },
+          { title: 'Total Packages', stat: totalPackages },
+          { title: 'Total Weight', stat: totalWeight }
+        ].map(({ title, stat }, index) => (
+          <View
+            key={index}
+            style={{
+              width: '50%',
+              alignItems: 'center',
+              backgroundColor: '#fff',
+              marginBottom: RFValue(0),
+              borderRightWidth: index % 2 !== 1 ? RFValue(1) : 0,
+              borderTopWidth: index > 1 ? RFValue(1) : 0,
+              // borderRightWidth: index === 0 ? RFValue(5) : 0,
+              borderColor: '#ddd',
+              paddingVertical: RFValue(15)
+            }}
+          >
+            <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(16), color: '#aaa' }}>{title}</Text>
+            <Text style={{ fontFamily: 'OpenSans-Bold', fontSize: RFValue(30) }}>{stat}</Text>
+          </View>
+        ))}
+      </View>
+
       <Pressable
         onPress={logout}
         style={{
-          marginVertical: RFValue(10),
+          // marginVertical: RFValue(10),
           flexDirection: 'row',
           paddingHorizontal: RFValue(10),
           height: RFValue(60),
@@ -94,42 +126,6 @@ const Profile = () => {
         </View>
         {loader ? <ActivityIndicator size={25} /> : <DesignIcon name="chevron-right" pkg="mc" size={28} color="#aaa" />}
       </Pressable>
-
-      <View
-        style={{
-          // paddingHorizontal: RFValue(10),
-          // marginVertical: RFValue(10),
-          // backgroundColor: '#fff',
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}
-      >
-        {[
-          { title: 'Total Collections', stat: statistics.collections && statistics.collections.length },
-          { title: 'Total Droppers', stat: statistics.droppers && statistics.droppers.length },
-          { title: 'Total Packages', stat: totalPackages },
-          { title: 'Total Weight', stat: totalWeight }
-        ].map(({ title, stat }, index) => (
-          <View
-            key={index}
-            style={{
-              width: '49%',
-              alignItems: 'center',
-              backgroundColor: '#fff',
-              marginBottom: RFValue(10),
-              borderLeftWidth: index % 2 === 1 ? RFValue(5) : 0,
-              // borderRightWidth: index === 0 ? RFValue(5) : 0,
-              borderColor: '#eeeeee70',
-              paddingVertical: RFValue(15)
-            }}
-          >
-            <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(16), color: '#aaa' }}>{title}</Text>
-            <Text style={{ fontFamily: 'OpenSans-Bold', fontSize: RFValue(30) }}>{stat}</Text>
-          </View>
-        ))}
-      </View>
     </View>
   );
 };

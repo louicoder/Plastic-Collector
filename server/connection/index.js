@@ -12,8 +12,8 @@ const connectWithRetry = () =>
     // url,
     {
       useNewUrlParser: true,
-      useUnifiedTopology: true
-      // useCreateIndex: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true
       // useFindAndModify: false
     },
     (error) => {

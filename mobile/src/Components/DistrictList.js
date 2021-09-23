@@ -15,10 +15,7 @@ const DistrictList = ({ onPress }) => {
       keyExtractor={() => Math.random().toString(36).slice(2)}
       renderItem={({ item: d, index }) => (
         <Pressable
-          onPress={() => {
-            dispatch.Collections.setActiveDistrict(d);
-            onPress();
-          }}
+          onPress={() => onPress(d)}
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',

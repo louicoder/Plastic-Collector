@@ -48,7 +48,7 @@ const Input = ({
           editable={!loading}
         />
         <Pressable onPress={togglePassword} style={Styles.passWordIcon(error)}>
-          <Icon name={!passVisible ? 'eye' : 'eye-off'} size={RFValue(25)} color={error ? '#ff0000' : '#aaa'} />
+          <Icon name={!passVisible ? 'eye' : 'eye-off'} size={RFValue(25)} color="#000" />
         </Pressable>
       </View>
       {error && <Text style={{ color: 'red' }}>{error}</Text>}
