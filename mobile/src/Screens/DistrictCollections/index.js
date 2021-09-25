@@ -79,7 +79,7 @@ const DistrictCollections = ({ route }) => {
                   backgroundColor: '#fff',
                   alignItems: 'center',
                   width: '100%',
-                  backgroundColor: '#eeeeee90',
+                  // backgroundColor: '#eeeeee90',
                   height: RFValue(80),
                   justifyContent: 'center'
                 }}

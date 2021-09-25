@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Dimensions, FlatList, Pressable, ActivityIndicator,ImageBackground } from 'react-native';
+import { View, Text, Dimensions, FlatList, Pressable, ActivityIndicator, ImageBackground } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { BottomSheet, CollectionPreview, DesignIcon, DistrictList } from '../../Components';
@@ -17,12 +17,13 @@ const Home = ({ navigation }) => {
     total: 0,
     district: 'kampala',
     isVisible: false,
-    last: false
+    last: false,
+    comp: ''
   });
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    navigation.setParams({ openFilterModal: () => setState({ ...state, isVisible: true }) });
+    navigation.setParams({ openFilterModal: () => setState({ ...state, isVisible: true, comp: 'districts' }) });
     getCollections();
   }, []);
 
@@ -40,74 +41,82 @@ const Home = ({ navigation }) => {
     });
   };
 
-  const getDistrictCollections = () => {
-    const { nextPage: page, limit, district } = state;
-    dispatch.Collections.getDistrictCollections({
-      district,
-      page,
-      limit,
-      callback: (res) => {
-        if (!res.success) return alert(res.result);
-        const { nextPage, totalDocuments: total, ...rest } = res;
-        // console.log('Result from district collections', res.result);
-        setState({ ...state, nextPage, total });
-      }
-    });
-  };
+  // const getDistrictCollections = () => {
+  //   const { nextPage: page, limit, district } = state;
+  //   dispatch.Collections.getDistrictCollections({
+  //     district,
+  //     page,
+  //     limit,
+  //     callback: (res) => {
+  //       if (!res.success) return alert(res.result);
+  //       const { nextPage, totalDocuments: total, ...rest } = res;
+  //       // console.log('Result from district collections', res.result);
+  //       setState({ ...state, nextPage, total });
+  //     }
+  //   });
+  // };
 
-  const getAttendantCollections = () => {
-    const { nextPage: page, limit, district } = state;
-    dispatch.Collections.getAttendantCollections({
-      attendatId: '',
-      page,
-      limit,
-      callback: (res) => {
-        if (!res.success) return alert(res.result);
-        const { nextPage, totalDocuments: total, ...rest } = res;
-        // console.log('Result from district collections', res.result);
-        setState({ ...state, nextPage, total });
-      }
-    });
-  };
+  // const getAttendantCollections = () => {
+  //   const { nextPage: page, limit, district } = state;
+  //   dispatch.Collections.getAttendantCollections({
+  //     attendatId: '',
+  //     page,
+  //     limit,
+  //     callback: (res) => {
+  //       if (!res.success) return alert(res.result);
+  //       const { nextPage, totalDocuments: total, ...rest } = res;
+  //       // console.log('Result from district collections', res.result);
+  //       setState({ ...state, nextPage, total });
+  //     }
+  //   });
+  // };
 
-  const getDropperCollections = () => {
-    const { nextPage: page, limit, district } = state;
-    dispatch.Collections.getDropperCollections({
-      dropperId: '',
-      page,
-      limit,
-      callback: (res) => {
-        if (!res.success) return alert(res.result);
-        const { nextPage, totalDocuments: total, ...rest } = res;
-        // console.log('Result from district collections', res.result);
-        setState({ ...state, nextPage, total });
-      }
-    });
-  };
+  // const getDropperCollections = () => {
+  //   const { nextPage: page, limit, district } = state;
+  //   dispatch.Collections.getDropperCollections({
+  //     dropperId: '',
+  //     page,
+  //     limit,
+  //     callback: (res) => {
+  //       if (!res.success) return alert(res.result);
+  //       const { nextPage, totalDocuments: total, ...rest } = res;
+  //       // console.log('Result from district collections', res.result);
+  //       setState({ ...state, nextPage, total });
+  //     }
+  //   });
+  // };
 
-  // Get account of attendant
-  const getDropperAccount = () => {
-    // const { nextPage: page, limit, district } = state;
-    // dispatch.Collections.getDropperCollections({
-    //   dropperId: 'xxxxxxxxxxxxx',
-    //   callback: (res) => {
-    //     if (!res.success) return alert(res.result);
-    //     const { nextPage, totalDocuments: total, ...rest } = res;
-    //     // console.log('Result from district collections', res.result);
-    //     setState({ ...state, nextPage, total });
-    //   }
-    // });
+  const RenderModalcontent = ({ comp, navigation }) => {
+    switch (comp) {
+      case 'districts':
+        return (
+          <DistrictList
+            onPress={(district) => {
+              console.log('District', district);
+              dispatch.Collections.setHomeDistrictName(district);
+              navigation.navigate('District', { screen: 'DistrictCollections', params: { district } });
+            }}
+          />
+        );
+      case 'collection':
+        return <CollectionDetails {...activeCollection} showDropperContact />;
+    }
   };
 
   return (
-    <ImageBackground source={require('../../assets/images/wallpaper4.png')} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: RFValue(0), opacity:0.4}}>
+    <View style={{ flex: 1 }}>
+      {/* <ImageBackground
+        source={require('../../assets/images/wallpaper4.png')}
+        style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: RFValue(0) }}
+      > */}
       <BottomSheet
         padded={false}
         isVisible={state.isVisible}
         closeModal={() => setState({ ...state, isVisible: false })}
       >
         <View style={{ maxHeight: 0.9 * height, width: '100%' }}>
-          <CollectionDetails {...activeCollection} showDropperContact />
+          {/* <CollectionDetails {...activeCollection} showDropperContact /> */}
+          <RenderModalcontent comp={state.comp} navigation={navigation} />
         </View>
       </BottomSheet>
 
@@ -127,7 +136,7 @@ const Home = ({ navigation }) => {
             {...item}
             onPress={() => {
               dispatch.Collections.setActiveCollection(item);
-              setState({ ...state, isVisible: true });
+              setState({ ...state, isVisible: true, comp: 'collection' });
             }}
           />
         )}
@@ -140,7 +149,8 @@ const Home = ({ navigation }) => {
         onEndReachedThreshold={0.01}
         onMomentumScrollBegin={() => setMomentum(false)}
       />
-    </ImageBackground>
+      {/* </ImageBackground> */}
+    </View>
   );
 };
 

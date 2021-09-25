@@ -26,7 +26,7 @@ export const MEASUREMENTS = [
 
 export const DISTRICTS = [
   'kawempe division',
-  'makinkye division',
+  'makindye division',
   'nakawa division',
   'kampala central division',
   'rubaga division',

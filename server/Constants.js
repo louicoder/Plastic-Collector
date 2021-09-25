@@ -20,7 +20,7 @@ const MEASUREMENTS = [ '330ml', '500ml', '1litre', '1.5litres', '2litres' ];
 
 const DISTRICTS = [
   'kawempe division',
-  'makinkye division',
+  'makindye division',
   'nakawa division',
   'kampala central division',
   'rubaga division',
