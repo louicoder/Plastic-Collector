@@ -13,6 +13,10 @@ const Login = ({ navigation: { navigate } }) => {
 
   // login into attendant account
   const login = () => {
+    const { phoneNumber, password } = state;
+    if (!phoneNumber) return Alert.alert('Missing fields', 'Phone number is required to login');
+    if (!password) return Alert.alert('Missing fields', 'Password is required to login');
+
     dispatch.Account.login({
       payload: state,
       callback: (res) => {
@@ -24,7 +28,10 @@ const Login = ({ navigation: { navigate } }) => {
   };
 
   return (
-    <ImageBackground source={require('../../assets/images/wallpaper.png')} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: RFValue(10)}}>
+    <ImageBackground
+      source={require('../../assets/images/wallpaper.png')}
+      style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: RFValue(10) }}
+    >
       <Logo />
       <Text style={{ fontSize: RFValue(14), marginVertical: RFValue(15), fontFamily: 'OpenSans-Regular' }}>
         Please enter your credentials to be able to use the platform
@@ -82,12 +89,14 @@ const Login = ({ navigation: { navigate } }) => {
       >
         <Text style={{ fontSize: RFValue(14), fontFamily: 'OpenSans-Regular' }}>Not yet registered ?</Text>
         <Pressable onPress={() => navigate('Register')}>
-          <Text style={{ fontSize: RFValue(14), color: '#008037', marginLeft: RFValue(10), fontFamily: 'OpenSans-Bold' }}>
+          <Text
+            style={{ fontSize: RFValue(14), color: '#008037', marginLeft: RFValue(10), fontFamily: 'OpenSans-Bold' }}
+          >
             Register
           </Text>
         </Pressable>
       </View>
-      </ImageBackground>
+    </ImageBackground>
   );
 };
 

@@ -3,6 +3,7 @@ import { View, Text, Dimensions, FlatList, Pressable, ActivityIndicator,ImageBac
 import { useDispatch, useSelector } from 'react-redux';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { BottomSheet, CollectionPreview, DesignIcon, DistrictList } from '../../Components';
+import CollectionDetails from '../../Components/CollectionDetails';
 // import CollectionDetails from '../../Components/CollectionDetails';
 
 const { height } = Dimensions.get('window');
@@ -106,37 +107,7 @@ const Home = ({ navigation }) => {
         closeModal={() => setState({ ...state, isVisible: false })}
       >
         <View style={{ maxHeight: 0.9 * height, width: '100%' }}>
-          <View
-            style={{
-              padding: RFValue(10),
-              paddingBottom: RFValue(15),
-              flexDirection: 'row',
-              alignItems: 'center',
-              width: '100%',
-              justifyContent: 'space-between'
-            }}
-          >
-            <Text style={{ fontFamily: 'OpenSans-Bold', fontSize: RFValue(18) }}>Select a district to filter</Text>
-            <Pressable
-              onPress={() => setState({ ...state, isVisible: false })}
-              style={{
-                width: RFValue(40),
-                height: RFValue(40),
-                borderRadius: 30,
-                backgroundColor: '#eeeeee90',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              <DesignIcon name="close" color="#000" />
-            </Pressable>
-          </View>
-          <DistrictList
-            onPress={(district) => {
-              setState({ ...state, isVisible: false });
-              navigation.navigate('District', { screen: 'DistrictCollections', params: { district } });
-            }}
-          />
+          <CollectionDetails {...activeCollection} showDropperContact />
         </View>
       </BottomSheet>
 

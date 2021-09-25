@@ -14,8 +14,12 @@ const PackagePreview = ({ index, rightIcon = true, rightIconPress, extStyles, ..
         flexDirection: 'row',
         alignItems: 'center',
         padding: RFValue(10),
-        backgroundColor: '#d8f3dc',
-        marginBottom: RFValue(5),
+        // backgroundColor: '#d8f3dc',
+        // backgroundColor: '#eeeeee50',
+        borderColor: '#eeeeee90',
+        borderTopWidth: index === 0 ? 1 : 0,
+        borderBottomWidth: 1,
+        // marginBottom: RFValue(5),
         ...extStyles
       }}
     >
@@ -26,6 +30,8 @@ const PackagePreview = ({ index, rightIcon = true, rightIconPress, extStyles, ..
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: '#000',
+          // backgroundColor: '#d8f3dc',
+
           borderRadius: 50,
           marginRight: RFValue(10)
         }}

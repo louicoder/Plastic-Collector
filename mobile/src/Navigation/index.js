@@ -6,6 +6,7 @@ import { Home, Filter, About, Account, Login, Register, AddColleciton, Splash, D
 import { DesignIcon, Header } from '../Components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { useSelector } from 'react-redux';
 
 // Stacks
 const HomeStack = createStackNavigator();
@@ -31,18 +32,21 @@ const RegisterScreens = () => (
 );
 
 // Registration screens
-const DistrictScreens = () => (
-  <DistrictStacks.Navigator screenOptions={{ headerMode: 'screen', header: () => null }}>
-    <DistrictStacks.Screen
-      name="DistrictCollections"
-      component={DistrictCollections}
-      options={{
-        header: (props) => <Header title="District Collections" {...props} />,
-        cardStyle: { backgroundColor: '#fff' }
-      }}
-    />
-  </DistrictStacks.Navigator>
-);
+const DistrictScreens = () => {
+  const { homeDistrictName } = useSelector((state) => state.Collections);
+  return (
+    <DistrictStacks.Navigator screenOptions={{ headerMode: 'screen', header: () => null }}>
+      <DistrictStacks.Screen
+        name="DistrictCollections"
+        component={DistrictCollections}
+        options={{
+          header: (props) => <Header title={homeDistrictName} {...props} />,
+          cardStyle: { backgroundColor: '#fff' }
+        }}
+      />
+    </DistrictStacks.Navigator>
+  );
+};
 
 // Login screens
 const LoginScreens = () => (

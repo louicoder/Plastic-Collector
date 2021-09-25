@@ -25,25 +25,25 @@ const CollectionPreview = ({
         alignItems: 'center',
         minHeight: RFValue(80),
         width: '100%',
-        // borderWidth: 1,
-        // borderColor: '#eee',
+        borderBottomWidth: 1,
+        borderColor: '#eeeeee90',
         padding: RFValue(10),
         justifyContent: 'space-between',
-        backgroundColor: '#eeeeee90',
+        // backgroundColor: '#eeeeee90',
         marginBottom: RFValue(5),
         ...extStyles
       }}
     >
       <View
         style={{
-          height: RFValue(40),
-          width: RFValue(40),
+          height: RFValue(50),
+          width: RFValue(50),
           borderRadius: 50,
           backgroundColor: '#bbdefb',
           alignItems: 'center',
           justifyContent: 'center',
-          marginRight: RFValue(10),
-          alignSelf: 'flex-start'
+          marginRight: RFValue(10)
+          // alignSelf: 'flex-start'
         }}
       >
         <Ionicon name="archive-outline" size={RFValue(25)} color="#000" />
@@ -53,7 +53,7 @@ const CollectionPreview = ({
           {totalweight} kgs ・ {totalCollection} bottles
         </Text>
         <View style={{ width: '100%' }}>
-          <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(12), color: 'green' }}>
+          <Text numberOfLines={1} style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(12), color: 'green' }}>
             {caption && caption.join(', ')}
           </Text>
         </View>

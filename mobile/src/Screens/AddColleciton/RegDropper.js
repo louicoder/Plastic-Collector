@@ -65,7 +65,8 @@ const RegDropper = ({ setAdddrop }) => {
         <MaskInput
           style={{
             height: RFValue(40),
-            backgroundColor: '#eee',
+            borderColor: '#ccc',
+            borderWidth: 1,
             width: '100%',
             paddingHorizontal: RFValue(10),
             fontSize: RFValue(14),

@@ -11,7 +11,8 @@ export default {
     activeCollection: {},
     districtFilteredCollections: [],
     homeDroppersList: [],
-    activeDistrict: ''
+    activeDistrict: '',
+    homeDistrictName: ''
   },
 
   //  Reducers :::
@@ -39,6 +40,9 @@ export default {
     },
     setActiveDistrict (state, activeDistrict) {
       return { ...state, activeDistrict };
+    },
+    setHomeDistrictName (state, homeDistrictName) {
+      return { ...state, homeDistrictName };
     }
   },
 

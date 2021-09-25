@@ -67,8 +67,8 @@ const DistrictCollections = ({ route }) => {
                   height: RFValue(80),
                   backgroundColor: '#fff',
                   justifyContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: '#eeeeee90'
+                  alignItems: 'center'
+                  // backgroundColor: '#eeeeee90'
                 }}
               >
                 <ActivityIndicator style={{ alignSelf: 'center' }} color="#000" />

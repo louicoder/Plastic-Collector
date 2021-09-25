@@ -34,7 +34,11 @@ const Header = ({ title, onBackPress, leftIcons, showback = true, extStyles, nav
       </View>
 
       <View style={{ flexGrow: 1, borderColor: 'red', ...titleStyles }}>
-        {title && <Text style={{ fontSize: RFValue(20), fontFamily: 'OpenSans-Bold' }}>{title}</Text>}
+        {title && (
+          <Text style={{ fontSize: RFValue(20), fontFamily: 'OpenSans-Bold', textTransform: 'capitalize' }}>
+            {title}
+          </Text>
+        )}
       </View>
 
       <View style={{ flexDirection: 'row', height: RFValue(50), alignItems: 'center' }}>
