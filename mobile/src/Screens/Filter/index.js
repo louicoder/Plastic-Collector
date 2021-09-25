@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Alert, Dimensions, ActivityIndicator } from 'react-native';
+import { View, Text, Alert, Dimensions, ActivityIndicator,ImageBackground } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useDispatch, useSelector } from 'react-redux';
@@ -57,7 +57,7 @@ const Filter = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, paddingHorizontal: RFValue(0) }}>
+    <ImageBackground source={require('../../assets/images/wallpaper4.png')} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: RFValue(0), opacity:0.4}}>
       <BottomSheet
         padded={false}
         isVisible={state.isVisible}
@@ -97,7 +97,7 @@ const Filter = ({ navigation }) => {
             </View>
           )}
       />
-    </View>
+    </ImageBackground>
   );
 };
 

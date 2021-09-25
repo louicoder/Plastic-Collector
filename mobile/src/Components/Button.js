@@ -8,7 +8,7 @@ const Button = ({ onPress, extStyles, txtStyles, title, color = '#fff', loading 
       style={{
         width: '100%',
         height: RFValue(40),
-        backgroundColor: loading ? '#ddd' : '#010203',
+        backgroundColor: loading ? '#ddd' : '#04692F',
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',

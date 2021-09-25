@@ -68,7 +68,7 @@ const Profile = () => {
         >
           <DesignIcon name="user" size={50} color="#aaa" />
         </Pressable>
-        <Text style={{ fontFamily: 'OpenSans-Bold', fontSize: RFValue(18), marginTop: RFValue(10) }}>{user.name}</Text>
+        <Text style={{color: 'green', fontFamily: 'OpenSans-Bold', fontSize: RFValue(18), marginTop: RFValue(10) }}>{user.name}</Text>
         <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(16), color: '#000' }}>{user.phoneNumber}</Text>
       </View>
 
@@ -97,7 +97,7 @@ const Profile = () => {
               borderTopWidth: index > 1 ? RFValue(1) : 0,
               // borderRightWidth: index === 0 ? RFValue(5) : 0,
               borderColor: '#ddd',
-              paddingVertical: RFValue(15)
+              paddingVertical: RFValue(15),color: 'green',
             }}
           >
             <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(16), color: '#aaa' }}>{title}</Text>
@@ -120,7 +120,7 @@ const Profile = () => {
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <DesignIcon name="lock" size={28} />
-          <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(16), marginLeft: RFValue(10) }}>
+          <Text style={{color: 'green', fontFamily: 'OpenSans-Regular', fontSize: RFValue(16), marginLeft: RFValue(10) }}>
             Logout of your account
           </Text>
         </View>

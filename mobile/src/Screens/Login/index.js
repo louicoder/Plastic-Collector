@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Pressable, ImageBackground } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useDispatch, useSelector } from 'react-redux';
 import { BottomSheet, Button, Input, Logo, Password } from '../../Components';
@@ -24,7 +24,7 @@ const Login = ({ navigation: { navigate } }) => {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: RFValue(10) }}>
+    <ImageBackground source={require('../../assets/images/wallpaper.png')} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: RFValue(10)}}>
       <Logo />
       <Text style={{ fontSize: RFValue(14), marginVertical: RFValue(15), fontFamily: 'OpenSans-Regular' }}>
         Please enter your credentials to be able to use the platform
@@ -82,12 +82,12 @@ const Login = ({ navigation: { navigate } }) => {
       >
         <Text style={{ fontSize: RFValue(14), fontFamily: 'OpenSans-Regular' }}>Not yet registered ?</Text>
         <Pressable onPress={() => navigate('Register')}>
-          <Text style={{ fontSize: RFValue(14), color: 'blue', marginLeft: RFValue(10), fontFamily: 'OpenSans-Bold' }}>
+          <Text style={{ fontSize: RFValue(14), color: '#008037', marginLeft: RFValue(10), fontFamily: 'OpenSans-Bold' }}>
             Register
           </Text>
         </Pressable>
       </View>
-    </View>
+      </ImageBackground>
   );
 };
 

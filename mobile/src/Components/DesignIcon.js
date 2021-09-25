@@ -14,7 +14,7 @@ const DesignIcon = ({ name, color = '#000', size = 25, extStyles, onPress, pkg =
     }
   };
   return pkg === 'ad' ? (
-    <Icon name={name} color={color} size={RFValue(size)} style={{ ...extStyles }} onPress={onPress} />
+    <Icon name={name} color={'green'} size={RFValue(size)} style={{ ...extStyles }} onPress={onPress} />
   ) : (
     <IconM name={name} color={color} size={RFValue(size)} style={{ ...extStyles }} onPress={onPress} />
   );

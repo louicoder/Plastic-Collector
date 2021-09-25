@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Dimensions, FlatList, Pressable, ActivityIndicator } from 'react-native';
+import { View, Text, Dimensions, FlatList, Pressable, ActivityIndicator,ImageBackground } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { BottomSheet, CollectionPreview, DesignIcon, DistrictList } from '../../Components';
@@ -99,7 +99,7 @@ const Home = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, paddingHorizontal: RFValue(0) }}>
+    <ImageBackground source={require('../../assets/images/wallpaper4.png')} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: RFValue(0), opacity:0.4}}>
       <BottomSheet
         padded={false}
         isVisible={state.isVisible}
@@ -169,7 +169,7 @@ const Home = ({ navigation }) => {
         onEndReachedThreshold={0.01}
         onMomentumScrollBegin={() => setMomentum(false)}
       />
-    </View>
+    </ImageBackground>
   );
 };
 
