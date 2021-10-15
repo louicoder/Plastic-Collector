@@ -11,7 +11,7 @@ const Spalsh = ({ navigation }) => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    checUserLoggedin();
+    // checUserLoggedin();
   }, []);
 
   const checUserLoggedin = async () => {
@@ -22,20 +22,21 @@ const Spalsh = ({ navigation }) => {
     });
   };
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center',backgroundColor:'white' }}>
-     {/* <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
+      {/* <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
         <Text style={{ fontSize: RFValue(25), color: 'black', fontWeight: 'bold' }}>PLASTIC</Text>
         <Text style={{ fontSize: RFValue(25), color: 'orange', fontWeight: 'bold', marginLeft: RFValue(10) }}>
           COLLECTOR
         </Text>
       </View>*/}
       <LottieView
-                    source={require('../../assets/splasha.json')}
-                    autoPlay
-                    loop={false}
-                    speed={1}
-                />
-      
+        source={require('../../assets/splasha.json')}
+        autoPlay
+        loop={false}
+        speed={1}
+        onAnimationFinish={checUserLoggedin}
+      />
+
       <View
         style={{
           position: 'absolute',
@@ -47,10 +48,7 @@ const Spalsh = ({ navigation }) => {
         {loading && <ActivityIndicator size={RFValue(25)} color="#010203" />}
         <Text style={{ fontSize: RFValue(12), marginLeft: RFValue(10) }}>Platic-collector © 2021</Text>
       </View>
-        
     </View>
-    
-    
   );
 };
 

@@ -20,7 +20,10 @@ const CheckCode = ({ code, setCode, setReg }) => {
   };
 
   return (
-    <ImageBackground source={require('../../assets/images/wallpaper2.png')} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: RFValue(10) }}>
+    <ImageBackground
+      source={require('../../assets/images/wallpaper2.png')}
+      style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: RFValue(10) }}
+    >
       <Text style={{ fontFamily: 'OpenSans-Regular', fontSize: RFValue(14), marginBottom: RFValue(10) }}>
         Enter the verification code that was given to you. The four digit code will give you access to the platform
       </Text>

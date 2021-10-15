@@ -84,6 +84,22 @@ const login = async (req, res) => {
   }
 };
 
+const adminAuth = async (req, res) => {
+  if (!req.body.password) return MissingField(res, 'Password');
+
+  const { password } = req.body;
+  try {
+    if (password !== 's3kr3TPlazt1k@#')
+      return res.json({
+        succes: false,
+        result: 'The admin password is wrong try again or contact administrator for help'
+      });
+    else return SuccessHandler(res, 'Passwords match');
+  } catch (error) {
+    return ErrorHandler(res, error);
+  }
+};
+
 const getAccount = async (req, res) => {
   if (!req.params.accountType) return MissingField(res, 'Account Type');
   if (!req.params.uid) return MissingField(res, 'Account Type');
@@ -150,5 +166,6 @@ module.exports = {
   getAccount,
   getCollectorsByDistrict,
   getAllCollectors,
-  getAttendantStatistics
+  getAttendantStatistics,
+  adminAuth
 };

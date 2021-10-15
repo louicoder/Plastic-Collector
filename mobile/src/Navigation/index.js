@@ -56,33 +56,50 @@ const LoginScreens = () => (
 );
 
 // Home screens
-const HomeScreens = () => (
-  <HomeStack.Navigator screenOptions={{ headerMode: 'screen', header: () => null }}>
-    <HomeStack.Screen
-      name="HomeScreen"
-      component={Home}
-      options={{
-        header: (props) => (
-          <Header
-            {...props}
-            showback={false}
-            title="All Collections"
-            leftIcons={[
-              {
-                name: 'swap',
-                onPress: () => props.route.params.openFilterModal(),
-                extStyles: { transform: [ { rotate: '90deg' } ] }
+const HomeScreens = () => {
+  const { user } = useSelector((state) => state.Account);
+
+  return (
+    <HomeStack.Navigator screenOptions={{ headerMode: 'screen', header: () => null }}>
+      <HomeStack.Screen
+        name="HomeScreen"
+        component={Home}
+        options={{
+          header: (props) => (
+            <Header
+              {...props}
+              showback={false}
+              title="All Collections"
+              // leftIcons={[
+              //   {
+              //     name: 'swap',
+              //     onPress: () => props.route.params.openFilterModal(),
+              //     extStyles: { transform: [ { rotate: '90deg' } ] }
+              //   }
+              //   // { name: 'adduser', onPress: () => null }
+              // ]}
+              leftIcons={
+                user && user.admin ? (
+                  [
+                    {
+                      name: 'swap',
+                      onPress: () => props.route.params.openFilterModal(),
+                      extStyles: { transform: [ { rotate: '90deg' } ] }
+                    }
+                  ]
+                ) : (
+                  []
+                )
               }
-              // { name: 'adduser', onPress: () => null }
-            ]}
-          />
-        ),
-        cardStyle: { backgroundColor: '#fff' }
-      }}
-    />
-    <HomeStack.Screen name="District" component={DistrictScreens} options={{ header: (props) => null }} />
-  </HomeStack.Navigator>
-);
+            />
+          ),
+          cardStyle: { backgroundColor: '#fff' }
+        }}
+      />
+      <HomeStack.Screen name="District" component={DistrictScreens} options={{ header: (props) => null }} />
+    </HomeStack.Navigator>
+  );
+};
 
 // Filter screens
 const AddScreens = () => (

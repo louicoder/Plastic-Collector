@@ -12,6 +12,7 @@ const CollectionPreview = ({
   dateCreated,
   typesBreakdown,
   extStyles,
+  last,
   ...rest
 }) => {
   const caption =
@@ -25,7 +26,7 @@ const CollectionPreview = ({
         alignItems: 'center',
         minHeight: RFValue(80),
         width: '100%',
-        borderBottomWidth: 1,
+        borderBottomWidth: !last ? 1 : 0,
         borderColor: '#eeeeee90',
         padding: RFValue(10),
         justifyContent: 'space-between',

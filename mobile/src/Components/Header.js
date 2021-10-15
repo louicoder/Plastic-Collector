@@ -42,15 +42,16 @@ const Header = ({ title, onBackPress, leftIcons, showback = true, extStyles, nav
       </View>
 
       <View style={{ flexDirection: 'row', height: RFValue(50), alignItems: 'center' }}>
-        {typeof leftIcons === 'object' &&
-          leftIcons.length &&
+        {/* {typeof leftIcons === 'object' && */}
+        {leftIcons && leftIcons.length ? (
           leftIcons.map((props, index) => (
             <DesignIcon
               key={KEY()}
               extStyles={{ marginLeft: leftIcons.length !== index + 1 ? 0 : RFValue(15) }}
               {...props}
             />
-          ))}
+          ))
+        ) : null}
       </View>
     </View>
   );
