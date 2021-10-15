@@ -95,6 +95,21 @@ export default {
       } catch (error) {
         return callback({ success: false, result: error });
       }
+    },
+
+    // GEt attendant account.
+    async adminAuth ({ password, callback }, state) {
+      try {
+        await AXIOS('account').post(`/admin-auth/`, { password }).then(async ({ data }) => {
+          if (data.success) {
+            await setAsyncStorage('user', { ...state.Account.user, admin: true }, (res) => callback(res));
+            dispatch.Account.setUser({ ...state.Account.user, admin: true });
+          }
+          return callback(data);
+        });
+      } catch (error) {
+        return callback({ success: false, result: error });
+      }
     }
   })
 };

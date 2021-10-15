@@ -2,13 +2,14 @@ import React from 'react';
 import { View, Text, Dimensions, FlatList, Pressable, ActivityIndicator, ImageBackground } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { BottomSheet, CollectionPreview, DesignIcon, DistrictList } from '../../Components';
+import { AdminPlaceholder, BottomSheet, CollectionPreview, DesignIcon, DistrictList } from '../../Components';
 import CollectionDetails from '../../Components/CollectionDetails';
 // import CollectionDetails from '../../Components/CollectionDetails';
 
 const { height } = Dimensions.get('window');
 const Home = ({ navigation }) => {
   const { activeCollection, collections } = useSelector((state) => state.Collections);
+  const { user } = useSelector((state) => state.Account);
   const loading = useSelector((state) => state.loading.effects.Collections);
   const [ momentum, setMomentum ] = React.useState(false);
   const [ state, setState ] = React.useState({
@@ -120,36 +121,40 @@ const Home = ({ navigation }) => {
         </View>
       </BottomSheet>
 
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        style={{ flex: 1 }}
-        data={collections}
-        keyExtractor={() => Math.random().toString(36).slice(2)}
-        ListFooterComponent={() =>
-          loading.getAllCollections && (
-            <View style={{ height: RFValue(50), backgroundColor: '#fff' }}>
-              <ActivityIndicator style={{ alignSelf: 'center', top: RFValue(10) }} color="#000" />
-            </View>
+      {user && user.admin ? (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          style={{ flex: 1 }}
+          data={collections}
+          keyExtractor={() => Math.random().toString(36).slice(2)}
+          ListFooterComponent={() =>
+            loading.getAllCollections && (
+              <View style={{ height: RFValue(50), backgroundColor: '#fff' }}>
+                <ActivityIndicator style={{ alignSelf: 'center', top: RFValue(10) }} color="#000" />
+              </View>
+            )}
+          renderItem={({ item, index }) => (
+            <CollectionPreview
+              last={collections && collections.length === index + 1}
+              {...item}
+              onPress={() => {
+                dispatch.Collections.setActiveCollection(item);
+                setState({ ...state, isVisible: true, comp: 'collection' });
+              }}
+            />
           )}
-        renderItem={({ item }) => (
-          <CollectionPreview
-            {...item}
-            onPress={() => {
-              dispatch.Collections.setActiveCollection(item);
-              setState({ ...state, isVisible: true, comp: 'collection' });
-            }}
-          />
-        )}
-        onEndReached={() => {
-          if (!state.last && !momentum) {
-            setMomentum(true);
-            return getCollections();
-          }
-        }}
-        onEndReachedThreshold={0.01}
-        onMomentumScrollBegin={() => setMomentum(false)}
-      />
-      {/* </ImageBackground> */}
+          onEndReached={() => {
+            if (!state.last && !momentum) {
+              setMomentum(true);
+              return getCollections();
+            }
+          }}
+          onEndReachedThreshold={0.01}
+          onMomentumScrollBegin={() => setMomentum(false)}
+        />
+      ) : (
+        <AdminPlaceholder />
+      )}
     </View>
   );
 };

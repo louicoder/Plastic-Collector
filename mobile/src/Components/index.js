@@ -12,6 +12,7 @@ import DistrictList from './DistrictList';
 import SelectField from './SelectField';
 import GenderSelector from './GenderSelector';
 import Logo from './Logo';
+import AdminPlaceholder from './AdminPlaceholder';
 
 export {
   Header,
@@ -27,5 +28,6 @@ export {
   DistrictList,
   SelectField,
   GenderSelector,
-  Logo
+  Logo,
+  AdminPlaceholder
 };
